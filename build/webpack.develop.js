@@ -13,6 +13,17 @@ module.exports = merge(common, {
     "devServer": {
         "hot": true
     },
+    "module": {
+        "rules" : [
+            {
+                "test": /\.css$/,
+                "use": [
+                    "vue-style-loader",
+                    "css-loader"
+                ]
+            }
+        ]
+    },
     "plugins": [
         new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({
