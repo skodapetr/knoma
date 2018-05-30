@@ -3,7 +3,7 @@ const {VueLoaderPlugin} = require("vue-loader");
 
 module.exports = {
     "entry": [
-        path.join(__dirname, "..", "client", "app.js")
+        path.join(__dirname, "..", "client", "index.js")
     ],
     "output": {
         "path": path.join(__dirname, "..", "public"),
