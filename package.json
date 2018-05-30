@@ -7,7 +7,8 @@
   "license": "MIT-0",
   "scripts": {
     "dev": "node ./server/server.develop.js",
-    "test": "jest"
+    "test": "jest",
+    "build": "webpack --config build/webpack.production.js"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -40,6 +41,7 @@
     "html-webpack-plugin": "^3.2.0",
     "jest": "^23.0.1",
     "jest-serializer-vue": "^2.0.0",
+    "mini-css-extract-plugin": "^0.4.0",
     "vue-jest": "^2.6.0",
     "vue-loader": "^15.2.2",
     "vue-style-loader": "^4.1.0",

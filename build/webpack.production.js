@@ -2,28 +2,25 @@ const path = require("path");
 const webpack = require("webpack");
 const merge = require("webpack-merge");
 const common = Object.assign({}, require("./webpack.common"));
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = merge(common, {
-    "mode": "development",
+    "mode": "production",
     "devtool": "inline-source-map",
-    "entry": [
-        "webpack-hot-middleware/client"
-    ],
-    "devServer": {
-        "hot": true
-    },
     "module": {
         "rules": [
             {
-                "test": /\.css$/,
+                "test": /\.css?$/,
                 "use": [
-                    "vue-style-loader",
+                    MiniCssExtractPlugin.loader,
                     "css-loader"
                 ]
             }
         ]
     },
     "plugins": [
-        new webpack.HotModuleReplacementPlugin()
+        new MiniCssExtractPlugin({
+            "filename": "main.css"
+        }),
     ]
 });
