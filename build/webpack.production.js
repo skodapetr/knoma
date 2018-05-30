@@ -4,6 +4,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = merge(common, {
     "mode": "production",
+    "output": {
+        "filename": "bundle.[chunkhash].js",
+    },
     "optimization": {
         "splitChunks": {
             "cacheGroups": {
@@ -11,7 +14,7 @@ module.exports = merge(common, {
                     "test": /[\\/]node_modules[\\/]/,
                     "name": "vendor",
                     "chunks": "all",
-                    "filename": "commons.js"
+                    "filename": "commons.[chunkhash].js"
                 },
             },
         },
@@ -30,6 +33,6 @@ module.exports = merge(common, {
     "plugins": [
         new MiniCssExtractPlugin({
             "filename": "main.css"
-        }),
+        })
     ]
 });
