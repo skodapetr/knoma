@@ -9,7 +9,7 @@ module.exports = {
     "output": {
         "path": path.join(__dirname, "..", "dist"),
         "filename": "bundle.js",
-        "publicPath": "/"
+        "publicPath": "./"
     },
     "resolve": {
         "modules": ["client", "node_modules"]
