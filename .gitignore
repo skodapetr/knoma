@@ -1,10 +1,17 @@
-# Set the default behavior, in case people don't have core.autocrlf set.
+# Set the default behavior, in case people don't have core.autocrlf set:
 * text eol=lf
 
-# IntelliJ IDEA files.
-*.iml
+# All that starts with dot:
+.* 
 
-# Generated files.
+# IntelliJ IDEA files:
+*.iml
+.idea/
+
+# Data files.
+data/
+
+# Generated files:
 node_modules/
 dist/
-.idea/
+
