@@ -1,29 +1,19 @@
 <template>
-    <div class="full-width center-content">
-        <h1>Hello World!</h1>
-        <div>
-            <router-link :to="{'name':'document-list'}">
-                Document list
-            </router-link>
-        </div>
-        <div>
-            <router-view/>
-        </div>
-    </div>
+  <v-app>
+    <app-header/>
+    <v-content>
+      <router-view/>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
-    export default {
-        "name": "app"
+  import Header from "./header";
+
+  export default {
+    "name": "app",
+    "components": {
+      "app-header": Header
     }
+  }
 </script>
-
-<style scoped>
-    .full-width {
-        width: 100%;
-    }
-
-    .center-content {
-
-    }
-</style>
