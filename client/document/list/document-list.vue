@@ -2,31 +2,34 @@
   <v-container>
     <v-list two-line>
       <template v-for="item in documents">
-        <v-list-tile
+        <v-list-item
           :key="item.id"
-          @click="onNavigate(item)">
-          <v-list-tile-content>
-            <v-list-tile-title>
+          @click="onNavigate(item)"
+        >
+          <v-list-item-content>
+            <v-list-item-title>
               {{ item.title }}
-            </v-list-tile-title>
-            <v-list-tile-sub-title>
+            </v-list-item-title>
+            <v-list-item-subtitle>
               <app-chip
                 v-if="item.published"
                 :value="item.published"
                 type="published"
-                outline
-                small/>
-              <app-tag-line :value="item.keywords"/>
-            </v-list-tile-sub-title>
-          </v-list-tile-content>
+                outlined
+                small
+              />
+              <app-tag-line :value="item.keywords" />
+            </v-list-item-subtitle>
+          </v-list-item-content>
           <v-btn
-            flat
+            text
             icon
             color="red"
-            @click.stop="onDelete(item)">
+            @click.stop="onDelete(item)"
+          >
             <v-icon>delete</v-icon>
           </v-btn>
-        </v-list-tile>
+        </v-list-item>
       </template>
     </v-list>
     <div class="floating-menu">
@@ -35,7 +38,8 @@
         color="green darken-2"
         fab
         dark
-        @click="onCreate">
+        @click="onCreate"
+      >
         <v-icon>add</v-icon>
       </v-btn>
     </div>
@@ -43,10 +47,10 @@
 </template>
 
 <script>
-  import {fetchList, deleteDocument} from "../documents-api";
-  import {fetchKeywords} from "@/app-service/keywords";
-  import TagLine from "../ui/tag-line";
-  import TagChip from "../ui/tag-chip";
+  import {fetchList, deleteDocument} from "./../documents-api";
+  import {fetchKeywords} from "./../../app-service/keywords";
+  import TagLine from "./../ui/tag-line";
+  import TagChip from "./../ui/tag-chip";
 
   export default {
     "name": "app-document-list",

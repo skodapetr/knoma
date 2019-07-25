@@ -1,4 +1,4 @@
-import config from "@/app-service/config";
+import config from "./../app-service/config";
 
 export const ERROR_OFFLINE = "OFFLINE";
 export const ERROR_PARSING = "PARSING";

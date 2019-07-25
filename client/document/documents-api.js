@@ -1,4 +1,4 @@
-import {fetchJson, postJson, putJson, deleteJson} from "@/app-service/http";
+import {fetchJson, postJson, putJson, deleteJson} from "./../app-service/http";
 
 export function fetchList() {
   return fetchJson("api/v1/documents");

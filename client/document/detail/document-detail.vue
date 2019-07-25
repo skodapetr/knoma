@@ -1,66 +1,80 @@
 <template>
   <v-container
     fluid
-    grid-list-lg>
+    grid-list-lg
+  >
     <div>
       <v-text-field
         v-model="document.title"
         label="Title *"
-        required/>
+        required
+      />
       <v-layout
         grid
-        wrap>
+        wrap
+      >
         <v-flex
           xs12
-          sm4>
+          sm4
+        >
           <v-text-field
             v-model="document.created"
             :disabled="true"
-            label="Created"/>
+            label="Created"
+          />
         </v-flex>
         <v-flex
           xs12
-          sm4>
+          sm4
+        >
           <v-text-field
             v-model="document.lastUpdate"
             :disabled="true"
-            label="Last update"/>
+            label="Last update"
+          />
         </v-flex>
         <v-flex
           xs12
-          sm4>
+          sm4
+        >
           <v-text-field
             v-model="document.published"
-            label="Published"/>
+            label="Published"
+          />
         </v-flex>
       </v-layout>
-      <app-tag-line-edit v-model="document.keywords"/>
+      <app-tag-line-edit v-model="document.keywords" />
       <app-url-list
         v-model="document.urls"
-        label="URL *"/>
+        label="URL *"
+      />
       <v-text-field
         v-model="document.identification"
-        label="Identification (DOI, ...)"/>
+        label="Identification (DOI, ...)"
+      />
       <v-textarea
         v-model="document.description"
         label="Description *"
         rows="2"
-        auto-grow/>
+        auto-grow
+      />
     </div>
     <br>
     <div
       v-for="node in document.nodes"
       ref="nodes"
-      :key="node.id">
+      :key="node.id"
+    >
       <app-node-detail
         :value="node"
         @add="onAddNode"
         @delete="onDeleteNode"
         @left="onMoveNodeLeft"
-        @right="onMoveNodeRight"/>
+        @right="onMoveNodeRight"
+      />
     </div>
 
-    <app-node-template @change="onNodeFromTemplate"/>
+    <app-node-template @change="onNodeFromTemplate" />
 
     <br>
     <br>
@@ -70,7 +84,8 @@
       :multi-line="true"
       :timeout="ui.snackbarTimeout"
       :color="ui.snackbarColor"
-      :top="true">
+      :top="true"
+    >
       {{ ui.snackbarMessage }}
     </v-snackbar>
 
@@ -79,18 +94,19 @@
         color="blue darken-2"
         dark
         fab
-        @click="onScrollDown">
+        @click="onScrollDown"
+      >
         <v-icon>keyboard_arrow_down</v-icon>
       </v-btn>
       <v-btn
         color="green darken-2"
         dark
         fab
-        @click="onSave">
+        @click="onSave"
+      >
         <v-icon>save</v-icon>
       </v-btn>
     </div>
-
   </v-container>
 </template>
 
@@ -101,14 +117,14 @@
     createDocument,
     saveDocument,
     addLocalData
-  } from "../documents-api";
+  } from "./../documents-api";
   import UrlList from "./url-list";
   import NodeDetail from "./node-detail";
   import NodeTemplate from "./node-template";
   import {
     fetchKeywords
-  } from "@/app-service/keywords";
-  import TagLineEdit from "../ui/tag-line-editable";
+  } from "./../../app-service/keywords";
+  import TagLineEdit from "./../ui/tag-line-editable";
 
   let nodeCounter = 0;
 

@@ -6,8 +6,8 @@ const server = require("./server.common");
 (function initialize() {
   const app = express();
   logger.info("Starting production server ...");
-  // server.initialize(app);
-  // initializeStatic(app);
+  server.initialize(app);
+  initializeStatic(app);
   server.start(app);
 }());
 

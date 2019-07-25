@@ -4,8 +4,9 @@
       v-for="item in value"
       :key="keyFnc(item)"
       :value="labelFnc(item)"
-      outline
-      small/>
+      outlined
+      small
+    />
   </span>
 </template>
 
@@ -18,7 +19,7 @@
       "app-chip": Chip
     },
     "props": {
-      "value": {"type": Array, "required": true},
+      "value": {"type": Array, "required": false},
       "keyFnc": {"type": Function, "default": (value) => value},
       "labelFnc": {"type": Function, "default": (value) => value}
     }

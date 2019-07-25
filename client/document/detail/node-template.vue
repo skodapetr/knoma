@@ -1,29 +1,34 @@
 <template>
   <v-layout 
     row 
-    wrap>
+    wrap
+  >
     <v-flex 
       xs6 
       sm1 
-      md1/>
+      md1
+    />
     <v-flex 
       class="template" 
       xs6 
       sm2 
-      md1>
+      md1
+    >
       <v-autocomplete
         v-model="type"
         :items="types"
         label="Type *"
         item-text="label" 
         item-value="value"
-        required/>
+        required
+      />
     </v-flex>
     <v-flex 
       class="template" 
       xs12 
       sm8 
-      md9>
+      md9
+    >
       <div class="column">
         <v-textarea
           v-model="content"
@@ -31,7 +36,8 @@
           label="Start typing to create a new element"
           rows="1"
           auto-grow
-          @input="onInput"/>
+          @input="onInput"
+        />
       </div>
     </v-flex>
   </v-layout>

@@ -1,6 +1,6 @@
 import VueRouter from "vue-router";
-import DocumentList from "@/document/list/document-list.vue";
-import DocumentDetail from "@/document/detail/document-detail.vue";
+import DocumentList from "./../document/list/document-list.vue";
+import DocumentDetail from "./../document/detail/document-detail.vue";
 
 const router = new VueRouter({
   "routes": [

@@ -2,8 +2,10 @@
   <v-chip
     :color="getColor()"
     :text-color="outline ? 'black' : 'white'"
-    :outline="outline"
-    :small="small">
+    :outlined="outline"
+    :small="small"
+    class="chip"
+  >
     {{ value }}
   </v-chip>
 </template>
@@ -11,7 +13,7 @@
 <script>
   // v-chip--select-multi
 
-  import {getKeywordsMap} from "@/app-service/keywords";
+  import {getKeywordsMap} from "./../../app-service/keywords";
 
   const COLOR_MAP = {
     "published": "grey darken-3",
@@ -46,3 +48,9 @@
     }
   };
 </script>
+
+<style scoped>
+  .chip {
+    margin-left: 0.2rem;
+  }
+</style>

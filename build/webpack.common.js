@@ -12,24 +12,22 @@ module.exports = {
     "filename": "bundle.js",
     "publicPath": "./"
   },
-    "optimization": {
-        "splitChunks": {
-            "cacheGroups": {
-                "commons": {
-                    "test": /[\\/]node_modules[\\/]/,
-                    "name": "vendor",
-                    "chunks": "all",
-                    "filename": "[name].[chunkhash].js"
-                },
-            },
+  "optimization": {
+    "splitChunks": {
+      "cacheGroups": {
+        "commons": {
+          "test": /[\\/]node_modules[\\/]/,
+          "filename": "[name].[chunkhash].js",
+          "name": "vendor",
+          "chunks": "all"
         },
+      },
     },
+  },
   "resolve": {
     "modules": ["node_modules"],
-    "extensions": [".js", ".vue"],
-    "alias": {
-      "@": path.resolve("client")
-    }
+    "extensions": [".js", ".vue", ".ts"],
+    "alias": {}
   },
   "module": {
     "rules": [
@@ -39,6 +37,10 @@ module.exports = {
       }, {
         "test": /\.js$/,
         "use": "babel-loader"
+      }, {
+        "test": /\.tsx?$/,
+        "use": "ts-loader",
+        "exclude": /node_modules/
       }
     ]
   },

@@ -6,20 +6,23 @@
     append-icon=""
     chips
     multiple
-    @input="onChange">
+    @input="onChange"
+  >
     <template
       slot="selection"
-      slot-scope="{item}">
+      slot-scope="{item}"
+    >
       <app-chip
         :key="item"
-        :value="item"/>
+        :value="item"
+      />
     </template>
   </v-combobox>
 </template>
 
 <script>
   import Chip from "./tag-chip";
-  import {getKeywordsLabels} from "@/app-service/keywords";
+  import {getKeywordsLabels} from "./../../app-service/keywords";
 
   export default {
     "name": "app-tag-line",

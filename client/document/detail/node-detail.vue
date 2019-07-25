@@ -2,46 +2,61 @@
   <v-layout
     :style="style"
     row
-    wrap>
+    wrap
+  >
     <div v-if="value['_']['level'] > 0">
       <v-icon>subdirectory_arrow_right</v-icon>
     </div>
     <v-flex
       xs6
       sm1
-      md1>
+      md1
+    >
       <div>
         <button @click="onAdd()">
-          <v-icon color="green">add_circle_outline</v-icon>
+          <v-icon color="green">
+            add_circle_outline
+          </v-icon>
         </button>
         <button
           style="margin-right: 1rem"
-          @click="onDelete()">
-          <v-icon color="red">delete</v-icon>
+          @click="onDelete()"
+        >
+          <v-icon color="red">
+            delete
+          </v-icon>
         </button>
         <button
           v-if="!showDetail"
-          @click="onToggle()">
-          <v-icon color="blue">expand_more</v-icon>
+          @click="onToggle()"
+        >
+          <v-icon color="blue">
+            expand_more
+          </v-icon>
         </button>
         <button
           v-if="showDetail"
-          @click="onToggle()">
-          <v-icon color="blue">expand_less</v-icon>
+          @click="onToggle()"
+        >
+          <v-icon color="blue">
+            expand_less
+          </v-icon>
         </button>
       </div>
       <div style="margin-top: 0.5rem">
         <button>
           <v-icon
             color="blue"
-            @click="onMoveLeft()">
+            @click="onMoveLeft()"
+          >
             keyboard_arrow_left
           </v-icon>
         </button>
         <button>
           <v-icon
             color="blue"
-            @click="onMoveRight()">
+            @click="onMoveRight()"
+          >
             keyboard_arrow_right
           </v-icon>
         </button>
@@ -50,59 +65,67 @@
     <v-flex
       xs6
       sm2
-      md1>
+      md1
+    >
       <v-autocomplete
         v-model="value.type"
         :items="types"
         label="Type *"
         item-text="label"
         item-value="value"
-        required/>
+        required
+      />
     </v-flex>
     <v-flex
       xs12
       sm8
-      md9>
+      md9
+    >
       <div class="column">
         <v-textarea
           v-model="value.content"
           class="nodeContent"
           label="Content"
           rows="1"
-          auto-grow/>
+          auto-grow
+        />
       </div>
       <v-layout
         v-if="showDetail"
         row
-        wrap>
+        wrap
+      >
         <v-flex xs12>
           <v-text-field
             v-model="value.url"
-            label="URL"/>
+            label="URL"
+          />
         </v-flex>
         <v-flex xs12>
-          <app-tag-line-edit v-model="value.keywords"/>
+          <app-tag-line-edit v-model="value.keywords" />
         </v-flex>
         <v-flex x12>
           <v-slider
             v-model="value.level"
             :tick-labels="priorities"
             :max="priorities.length - 1"
-            ticks="always"/>
+            ticks="always"
+          />
         </v-flex>
       </v-layout>
       <v-layout
         v-else
-        class="overview">
-        <app-tag-line :value="value.keywords"/>
+        class="overview"
+      >
+        <app-tag-line :value="value.keywords" />
       </v-layout>
     </v-flex>
   </v-layout>
 </template>
 
 <script>
-  import TagLine from "../ui/tag-line";
-  import TagLineEdit from "../ui/tag-line-editable";
+  import TagLine from "./../ui/tag-line";
+  import TagLineEdit from "./../ui/tag-line-editable";
 
   export default {
     "name": "app-node-detail",

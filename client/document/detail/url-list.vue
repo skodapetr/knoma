@@ -3,25 +3,32 @@
     <v-layout 
       v-for="(url, index) in value" 
       :key="index" 
-      row>
+      row
+    >
       <v-flex xs1>
         <button @click="onAdd(index)">
-          <v-icon color="green">add_circle_outline</v-icon>
+          <v-icon color="green">
+            add_circle_outline
+          </v-icon>
         </button>
         <button @click="onDelete(index)">
-          <v-icon color="red">delete</v-icon>
+          <v-icon color="red">
+            delete
+          </v-icon>
         </button>
       </v-flex>
       <v-flex xs11>
         <v-text-field 
           :value="url" 
           :label="label" 
-          @input="(v) => onUpdate(index, v)"/>
+          @input="(v) => onUpdate(index, v)"
+        />
       </v-flex>
     </v-layout>
     <button 
       v-if="value.length === 0" 
-      @click="onAdd()">
+      @click="onAdd()"
+    >
       <v-icon>add_circle_outline</v-icon>
     </button>
   </div>
