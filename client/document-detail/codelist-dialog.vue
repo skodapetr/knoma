@@ -5,8 +5,8 @@
     @keydown.esc="onClose"
   >
     <v-card>
-      <v-card-title class="headline grey lighten-2">
-        Note Type
+      <v-card-title class="headline">
+        Type
       </v-card-title>
       <v-card-text class="mt-4">
         <v-select
