@@ -44,7 +44,6 @@
         :items="items"
         item-text="title"
         item-value="iri"
-        return-object
         @input="(v) => onUpdateValue(index, v)"
       />
     </v-list-item>
