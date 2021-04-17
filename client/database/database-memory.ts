@@ -1,20 +1,30 @@
 import axios from "axios";
 
 import {Database} from "./database-api";
-import {Document, DocumentWithData, Note, Predicate} from "./model";
 import {
-  getCoreLabel,
+  Document,
+  DocumentWithData,
+  Note,
+  Predicate,
+  PredicateEditType
+} from "./model";
+import {
   getCoreCodelistItem,
+  getCoreLabel,
   getCorePredicate,
 } from "./predefined";
+
+const RDFS_PROPERTY = "http://www.w3.org/2000/01/rdf-schema#Property";
+
+const RDFS_HAS_DOMAIN = "http://www.w3.org/2000/01/rdf-schema#domain";
+
+const RDFS_HAS_IN_SCHEME = "http://www.w3.org/2004/02/skos/core#inScheme";
 
 class InMemoryDatabase implements Database {
 
   private fetched = false;
 
   private documents: DocumentWithData[] = [];
-
-  private predicates: Predicate[] = [...getCorePredicate()];
 
   async getDocuments(): Promise<Document[]> {
     await this.fetchDatabaseFile();
@@ -41,12 +51,18 @@ class InMemoryDatabase implements Database {
 
   async getPredicates(): Promise<Predicate[]> {
     await this.fetchDatabaseFile();
-    return this.predicates;
+    const result = [...getCorePredicate()]
+    for (const document of this.documents) {
+      if (document.types.includes(RDFS_PROPERTY)) {
+        result.push(documentToPredicate(document));
+      }
+    }
+    return result;
   }
 
   async getPredicate(iri: string): Promise<Predicate | undefined> {
-    await this.fetchDatabaseFile();
-    for (const predicate of this.predicates) {
+    const predicates = await this.getPredicates();
+    for (const predicate of predicates) {
       if (predicate.iri === iri) {
         return predicate;
       }
@@ -65,7 +81,8 @@ class InMemoryDatabase implements Database {
     }
     // Add documents of required type.
     for (const document of this.documents) {
-      if (isOfType(document, types)) {
+      const inSchema = document.properties[RDFS_HAS_IN_SCHEME] || [];
+      if (isIntersecting(inSchema, types)) {
         result.add(document.iri);
       }
     }
@@ -115,13 +132,26 @@ class InMemoryDatabase implements Database {
 
 }
 
-function isOfType(document: Document, types: string[]): boolean {
-  for (const type of document.types) {
-    if (types.includes(type)) {
+function isIntersecting(left: string[], right: string[]): boolean {
+  for (const leftItem of left) {
+    if (right.includes(leftItem)) {
       return true;
     }
   }
   return false;
+}
+
+function documentToPredicate(document: Document) : Predicate {
+  const codelist = document.properties[RDFS_HAS_DOMAIN];
+  return {
+    "iri": document.iri,
+    "label": document.title,
+    "multiple": true,
+    "type": codelist === undefined ?
+      PredicateEditType.String : PredicateEditType.Codelist,
+    "codelist": codelist || [],
+    "domain": undefined,
+  };
 }
 
 function find(document: Document[], iri: string): number | undefined {
