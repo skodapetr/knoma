@@ -17,7 +17,6 @@
           label="Type"
           multiple
           chips
-          return-object
           @input="onChange"
         />
       </v-card-text>
@@ -57,8 +56,17 @@ export default {
   }),
   "watch": {
     "visible": async function () {
+      const database = getDatabase();
       this.loading = true;
-      this.items = await getDatabase().getCodelist(this.codelist);
+      const iris = await database.getCodelist(this.codelist);
+      const tags = [];
+      for (const iri of iris) {
+        tags.push({
+          "iri": iri,
+          "title": await database.getLabel(iri),
+        });
+      }
+      this.items = tags;
       this.loading = false;
     },
   },

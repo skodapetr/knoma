@@ -77,10 +77,19 @@ export default {
     "items": [],
   }),
   "mounted": async function () {
+    const database = getDatabase();
     this.loading = true;
-    this.definition = (await getDatabase().getPredicate(this.predicate)) || {};
+    this.definition = (await database.getPredicate(this.predicate)) || {};
     if (this.definition.type === "codelist") {
-      this.items = await getDatabase().getCodelist(this.definition.codelist);
+      const iris = await database.getCodelist(this.definition.codelist);
+      const items = [];
+      for (const iri of iris) {
+        items.push({
+          "iri": iri,
+          "title": await database.getLabel(iri),
+        });
+      }
+      this.items = items;
     }
     this.loading = false;
   },

@@ -3,6 +3,12 @@
     <v-list-item-title>
       {{ value.title || value.iri }}
     </v-list-item-title>
+    <v-list-item-subtitle>
+      <app-tags
+        :value="value.types"
+        small
+      />
+    </v-list-item-subtitle>
     <v-list-item-action>
       <v-btn
         icon
@@ -18,8 +24,13 @@
 </template>
 
 <script>
+import TagLine from "../components/tag-line";
+
 export default {
   "name": "DocumentListItem",
+  "components": {
+    "app-tags": TagLine,
+  },
   "props": {
     "value": {"type": Object, "required": true},
   },

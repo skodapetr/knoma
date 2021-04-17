@@ -20,6 +20,13 @@
         <v-icon>mdi-plus</v-icon>
       </v-btn>
     </div>
+    <v-overlay :value="loading">
+      <v-progress-circular
+        :size="50"
+        color="primary"
+        indeterminate
+      />
+    </v-overlay>
   </v-container>
 </template>
 

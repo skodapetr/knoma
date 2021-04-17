@@ -19,6 +19,9 @@
         values in codelists.
       </li>
       <li>
+        <code>Property</code> - This document can be used as a property.
+      </li>
+      <li>
         <code>Annotation</code> - Predefined codelist of annotations.
       </li>
     </ul>

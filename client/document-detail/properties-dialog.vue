@@ -43,7 +43,10 @@
           </v-list-item-title>
         </v-list-item>
         <v-list-item>
-          <app-property-selector @add="onAdd" />
+          <app-property-selector
+            :types="types"
+            @add="onAdd"
+          />
         </v-list-item>
       </v-list>
     </v-card>
@@ -63,6 +66,7 @@ export default {
   "props": {
     "value": {"type": Object, "required": true},
     "visible": {"type": Boolean, "required": true},
+    "types": {"type": Array, "required": true},
   },
   "methods": {
     "onChange": function (key, value) {

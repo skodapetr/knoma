@@ -1,8 +1,12 @@
 import axios from "axios";
 
 import {Database} from "./database-api";
-import {Codelist, Document, DocumentWithData, Note, Predicate} from "./model";
-import {getCoreCodelistItem, getCorePredicate} from "./predefined";
+import {Document, DocumentWithData, Note, Predicate} from "./model";
+import {
+  getCoreLabel,
+  getCoreCodelistItem,
+  getCorePredicate,
+} from "./predefined";
 
 class InMemoryDatabase implements Database {
 
@@ -50,22 +54,22 @@ class InMemoryDatabase implements Database {
     return undefined;
   }
 
-  async getCodelist(types: string[]): Promise<Codelist[]> {
+  async getCodelist(types: string[]): Promise<string[]> {
     await this.fetchDatabaseFile();
-    const result: Record<string, Codelist> = {};
+    const result: Set<string> = new Set();
     // Add core items.
     for (const type of types) {
       for (const item of getCoreCodelistItem(type)) {
-        result[item.iri] = item;
+        result.add(item);
       }
     }
-    // Add Documents.
-    for (const Document of this.documents) {
-      if (isOfType(Document, types)) {
-        result[Document.iri] = Document;
+    // Add documents of required type.
+    for (const document of this.documents) {
+      if (isOfType(document, types)) {
+        result.add(document.iri);
       }
     }
-    return Object.values(result);
+    return [...result];
   }
 
   async storeDocument(document: DocumentWithData): Promise<void> {
@@ -96,11 +100,24 @@ class InMemoryDatabase implements Database {
     await this.postDocuments();
   }
 
+  async getLabel(iri: string): Promise<string> {
+    const label = getCoreLabel(iri);
+    if (label !== undefined) {
+      return label;
+    }
+    for (const document of this.documents) {
+      if (document.iri === iri) {
+        return document.title;
+      }
+    }
+    return iri;
+  }
+
 }
 
 function isOfType(document: Document, types: string[]): boolean {
   for (const type of document.types) {
-    if (types.includes(type.iri)) {
+    if (types.includes(type)) {
       return true;
     }
   }

@@ -25,6 +25,7 @@ export function createNote(iri: string, text: string): Note {
     "iri": iri,
     "types": [],
     "properties": {},
+    "created": new Date().toISOString().substr(0, 10),
     "text": text,
     "image": undefined,
   };

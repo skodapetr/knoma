@@ -1,4 +1,4 @@
-import {Codelist, Document, DocumentWithData, Predicate} from "./model";
+import {Document, DocumentWithData, Predicate} from "./model";
 
 export interface Database {
 
@@ -10,10 +10,12 @@ export interface Database {
 
   getPredicate(iri: string): Promise<Predicate | undefined>;
 
-  getCodelist(types: string[]): Promise<Codelist[]>;
+  getCodelist(types: string[]): Promise<string[]>;
 
   storeDocument(document: DocumentWithData): Promise<void>;
 
-  deleteDocument(iri:string): Promise<void>;
+  deleteDocument(iri: string): Promise<void>;
+
+  getLabel(iri: string): Promise<string>;
 
 }

@@ -1,16 +1,8 @@
-export interface Codelist {
-
-  iri: string;
-
-  title: string;
-
-}
-
 export interface Document {
 
   iri: string;
 
-  types: Codelist[];
+  types: string[];
 
   title: string;
 
@@ -32,9 +24,11 @@ export interface Note {
 
   iri: string;
 
-  types: Codelist[];
+  types: string[];
 
   properties: { [iri: string]: string[] },
+
+  created: string;
 
   text: string;
 
@@ -43,7 +37,7 @@ export interface Note {
 }
 
 /**
- * Can be used to connect properties to entities.
+ * Can be used to connect properties to documents and notes.
  */
 export interface Predicate {
 
@@ -65,6 +59,12 @@ export interface Predicate {
    * Codelist to use to get values from.
    */
   codelist: string[] | undefined;
+
+  /**
+   * May limit classes required to allow for predicate search. Set to undefined
+   * to apply no limitation.
+   */
+  domain: string[] | undefined;
 
 }
 

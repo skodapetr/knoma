@@ -9,14 +9,11 @@
         mdi-share-variant
       </v-icon>
     </v-btn>
-    <v-chip
-      v-for="type in value.types"
-      :key="type.iri"
+    <app-tags
+      :value="value.types"
       small
       @click="onEditType"
-    >
-      {{ type.title }}
-    </v-chip>
+    />
     <v-btn
       v-show="value.types.length === 0"
       icon
@@ -30,8 +27,13 @@
 </template>
 
 <script>
+import TagLine from "../components/tag-line";
+
 export default {
   "name": "TypeHeader",
+  "components": {
+    "app-tags": TagLine,
+  },
   "props": {
     "value": {"type": Object, "required": true},
   },

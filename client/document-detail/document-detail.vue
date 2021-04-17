@@ -16,6 +16,7 @@
     <app-property-dialog
       v-model="propertyDialog.data"
       :visible="propertyDialog.open"
+      :types="propertyDialog.types"
       @save="onSavePropertiesDialog"
       @close="onClosePropertiesDialog"
     />
@@ -50,6 +51,7 @@ export default {
     "propertyDialog": {
       "open": false,
       "owner": undefined,
+      "types": [],
       "data": {},
     },
     "typeDialog": {
@@ -75,6 +77,7 @@ export default {
       this.propertyDialog = {
         "open": true,
         "owner": owner,
+        "types": owner.types,
         "data": cloneProperties(owner.properties),
       };
     },

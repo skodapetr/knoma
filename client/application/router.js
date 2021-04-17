@@ -1,5 +1,4 @@
 import VueRouter from "vue-router";
-import Home from "../home/home.vue";
 import About from "../about/about";
 import DocumentDetail from "../document-detail/document-detail";
 import DocumentList from "../document-list/document-list";
@@ -9,7 +8,7 @@ const router = new VueRouter({
     {
       "path": "/",
       "name": "home",
-      "component": Home,
+      "component": DocumentDetail,
     }, {
       "path": "/document-edit",
       "name": "document-edit",
