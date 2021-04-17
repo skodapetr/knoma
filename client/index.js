@@ -16,7 +16,7 @@ new Vue({
   "router": router,
   "vuetify": new Vuetify({
     "theme": {
-      "dark": true
+      "dark": true,
     },
   }),
   "render": (createElement) => createElement(Layout),

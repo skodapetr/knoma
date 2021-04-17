@@ -6,7 +6,7 @@ import {
   DocumentWithData,
   Note,
   Predicate,
-  PredicateEditType
+  PredicateEditType,
 } from "./model";
 import {
   getCoreCodelistItem,
@@ -51,7 +51,7 @@ class InMemoryDatabase implements Database {
 
   async getPredicates(): Promise<Predicate[]> {
     await this.fetchDatabaseFile();
-    const result = [...getCorePredicate()]
+    const result = [...getCorePredicate()];
     for (const document of this.documents) {
       if (document.types.includes(RDFS_PROPERTY)) {
         result.push(documentToPredicate(document));
