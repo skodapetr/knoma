@@ -14,6 +14,10 @@ Vue.use(VueRouter);
 new Vue({
   "el": "#application",
   "router": router,
-  "vuetify": new Vuetify({}),
+  "vuetify": new Vuetify({
+    "theme": {
+      "dark": true
+    },
+  }),
   "render": (createElement) => createElement(Layout),
 });
