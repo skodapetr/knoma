@@ -1,15 +1,15 @@
 const webpack = require("webpack");
-const merge = require("webpack-merge");
-const common = Object.assign({}, require("./webpack.common"));
+const {merge} = require("webpack-merge");
+const common = require("./webpack.common");
 
-module.exports = merge(common, {
+module.exports = merge({
   "mode": "development",
   "devtool": "inline-source-map",
   "entry": [
-    "webpack-hot-middleware/client"
+    "webpack-hot-middleware/client",
   ],
   "devServer": {
-    "hot": true
+    "hot": true,
   },
   "module": {
     "rules": [
@@ -17,18 +17,19 @@ module.exports = merge(common, {
         "test": /\.css$/,
         "use": [
           "vue-style-loader",
-          "css-loader"
-        ]
-      }, {
+          "css-loader",
+        ],
+      },
+      {
         // Apply linter during run development.
         "enforce": "pre",
         "test": /\.(js|vue)$/,
         "loader": "eslint-loader",
-        "exclude": /node_modules/
-      }
-    ]
+        "exclude": /node_modules/,
+      },
+    ],
   },
   "plugins": [
-    new webpack.HotModuleReplacementPlugin()
-  ]
-});
+    new webpack.HotModuleReplacementPlugin(),
+  ],
+}, common);

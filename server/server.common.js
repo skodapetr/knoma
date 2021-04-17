@@ -1,11 +1,11 @@
 const express = require("express");
 const logger = require("./logging");
-const config = require("../config");
-const documentsApi = require("./document/routes");
+const config = require("./configuration");
+const databaseApi = require("./database-file");
 
 function initialize(app) {
   const router = express.Router();
-  documentsApi(router);
+  databaseApi(router);
   app.use("/api/v1", router);
 }
 
@@ -13,9 +13,9 @@ function start(app) {
   const port = config.port;
   app.listen(port, (error) => {
     if (error) {
-      logger.error("Can't start server: ", error);
+      logger.error("Can't start server.", {"error": error});
     }
-    logger.info("Listening on port: ", port);
+    logger.info("Server has been started. ", {"port": port});
   });
 }
 

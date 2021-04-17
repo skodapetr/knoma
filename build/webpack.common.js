@@ -1,25 +1,26 @@
 const path = require("path");
-const webpack = require("webpack");
-const {VueLoaderPlugin} = require("vue-loader");
+const WebpackBar = require("webpackbar");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+
+const {VueLoaderPlugin} = require("vue-loader");
 
 module.exports = {
   "entry": [
-    path.join(__dirname, "..", "client", "index.js")
+    path.join(__dirname, "..", "client", "index.js"),
   ],
   "output": {
     "path": path.join(__dirname, "..", "dist"),
-    "filename": "bundle.js",
-    "publicPath": "./"
+    "filename": "[name].[fullhash:16].bundle.js",
+    "publicPath": "./",
   },
   "optimization": {
+    "runtimeChunk": "single",
     "splitChunks": {
       "cacheGroups": {
         "commons": {
           "test": /[\\/]node_modules[\\/]/,
-          "filename": "[name].[chunkhash].js",
-          "name": "vendor",
-          "chunks": "all"
+          "name": "vendors",
+          "chunks": "all",
         },
       },
     },
@@ -27,30 +28,29 @@ module.exports = {
   "resolve": {
     "modules": ["node_modules"],
     "extensions": [".js", ".vue", ".ts"],
-    "alias": {}
   },
   "module": {
     "rules": [
       {
         "test": /\.vue$/,
-        "use": "vue-loader"
+        "use": "vue-loader",
       }, {
         "test": /\.js$/,
-        "use": "babel-loader"
+        "exclude": /node_modules/,
+        "use": "babel-loader",
       }, {
-        "test": /\.tsx?$/,
+        "test": /\.ts?$/,
+        "exclude": /node_modules/,
         "use": "ts-loader",
-        "exclude": /node_modules/
-      }
-    ]
+      },
+    ],
   },
   "plugins": [
-    new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
       "filename": "index.html",
       "template": path.join(__dirname, "..", "public", "index.html"),
-      "inject": true
     }),
-    new webpack.DefinePlugin({})
-  ]
+    new WebpackBar(),
+    new VueLoaderPlugin(),
+  ],
 };

@@ -1,19 +1,19 @@
 import Vue from "vue";
-import VueRouter from "vue-router";
 import Vuetify from "vuetify";
-import App from "./app/app.vue";
-import router from "./app/router";
+import VueRouter from "vue-router";
+
 import "vuetify/dist/vuetify.min.css";
 
-Vue.config.productionTip = false;
+import router from "./application/router";
+import Layout from "./application/layout.vue";
 
-Vue.use(VueRouter);
 Vue.use(Vuetify);
+Vue.use(VueRouter);
 
 /* eslint-disable no-new */
 new Vue({
-  "el": "#app",
+  "el": "#application",
   "router": router,
   "vuetify": new Vuetify({}),
-  "render": (h) => h(App)
+  "render": (createElement) => createElement(Layout),
 });
