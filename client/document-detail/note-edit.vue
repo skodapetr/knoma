@@ -4,10 +4,46 @@
     width="100%"
   >
     <v-card-title class="pb-0">
+      <v-btn
+        icon
+        class="ml-2 mr-4"
+        @click="onCopyIri"
+      >
+        <v-icon>
+          mdi-share-variant
+        </v-icon>
+      </v-btn>
+      <v-btn
+        icon
+        class="mr-4"
+        @click="onEditProperties(value)"
+      >
+        <v-icon>
+          mdi-pencil
+        </v-icon>
+      </v-btn>
       <app-header
         :value="value"
         @edit-type="onEditType"
       />
+      <v-spacer />
+      <v-btn
+        icon
+        class="mr-4"
+        @click="onDelete"
+      >
+        <v-icon color="red">
+          mdi-minus
+        </v-icon>
+      </v-btn>
+      <v-btn
+        icon
+        @click="onAdd()"
+      >
+        <v-icon color="green">
+          mdi-plus
+        </v-icon>
+      </v-btn>
     </v-card-title>
     <v-card-text class="pb-0">
       <v-textarea
@@ -28,48 +64,22 @@
     </v-card-text>
     <v-card-actions>
       <v-btn
-        icon
-        @click="onEditProperties(value)"
-      >
-        <v-icon>
-          mdi-pencil
-        </v-icon>
-      </v-btn>
-      <v-btn
         v-show="value.image"
         @click="onClearImage"
       >
         Clear Image
-      </v-btn>
-      <v-spacer />
-      <v-btn
-        icon
-        class="mr-4"
-        @click="onDelete"
-      >
-        <v-icon color="red">
-          mdi-minus
-        </v-icon>
-      </v-btn>
-      <v-btn
-        icon
-        @click="onAdd()"
-      >
-        <v-icon color="green">
-          mdi-plus
-        </v-icon>
       </v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
-import Header from "./type-header";
+import TypeLine from "./type-line";
 
 export default {
   "name": "NoteEdit",
   "components": {
-    "app-header": Header,
+    "app-header": TypeLine,
   },
   "props": {
     "value": {"type": Object, "required": true},

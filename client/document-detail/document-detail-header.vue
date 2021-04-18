@@ -1,11 +1,29 @@
 <template>
   <v-container>
-    <h2>
-      <app-header
+    <div>
+      <v-btn
+        icon
+        class="ml-2 mr-4"
+        @click="onCopyIri"
+      >
+        <v-icon>
+          mdi-share-variant
+        </v-icon>
+      </v-btn>
+      <v-btn
+        icon
+        class="mr-4"
+        @click="onEditProperties(value)"
+      >
+        <v-icon>
+          mdi-pencil
+        </v-icon>
+      </v-btn>
+      <app-types
         :value="value"
         @edit-type="onEditType"
       />
-    </h2>
+    </div>
     <v-text-field
       :value="value.title"
       label="Title *"
@@ -22,14 +40,6 @@
       @input="onChangeDescription"
     />
     <v-layout>
-      <v-btn
-        icon
-        @click="onEditProperties(value)"
-      >
-        <v-icon>
-          mdi-pencil
-        </v-icon>
-      </v-btn>
       <v-flex />
       <v-btn
         class="mr-4"
@@ -45,17 +55,20 @@
 </template>
 
 <script>
-import Header from "./type-header";
+import TypeLine from "./type-line";
 
 export default {
   "name": "DocumentDetailHeader",
   "components": {
-    "app-header": Header,
+    "app-types": TypeLine,
   },
   "props": {
     "value": {"type": Object, "required": true},
   },
   "methods": {
+    "onCopyIri": function () {
+      navigator.clipboard.writeText(this.value.iri);
+    },
     "onChangeTitle": function (value) {
       this.$emit("input", {
         ...this.value,

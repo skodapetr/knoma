@@ -30,8 +30,8 @@
     <v-layout class="mt-6">
       <v-flex />
       <v-btn
-          class="mr-4"
-          @click="onSave"
+        class="mr-4"
+        @click="onSave"
       >
         Save
       </v-btn>
