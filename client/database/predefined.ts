@@ -23,7 +23,9 @@ const PREDICATES: Predicate[] = [
     "codelist": [
       "http://www.w3.org/2004/02/skos/core#ConceptScheme",
     ],
-    "domain": undefined,
+    "domain": [
+      "http://www.w3.org/2004/02/skos/core#Concept",
+    ],
   }, {
     "iri": "https://knoma.skodapetr.eu/vocabulary#url",
     "label": "URL",
@@ -56,6 +58,14 @@ const PREDICATES: Predicate[] = [
     "domain": [
       "http://www.w3.org/2000/01/rdf-schema#Property",
     ],
+  }, {
+    // Used by Notes to reference another note or a document.
+    "iri": "https://knoma.skodapetr.eu/vocabulary#ref",
+    "label": "Reference",
+    "multiple": false,
+    "type": PredicateEditType.String,
+    "codelist": undefined,
+    "domain": undefined,
   },
 ];
 

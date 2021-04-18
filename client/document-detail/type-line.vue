@@ -1,14 +1,5 @@
 <template>
-  <div>
-    <v-btn
-      icon
-      class="ml-2 mr-4"
-      @click="onCopyIri"
-    >
-      <v-icon>
-        mdi-share-variant
-      </v-icon>
-    </v-btn>
+  <span>
     <app-tags
       :value="value.types"
       small
@@ -23,14 +14,14 @@
         mdi-plus
       </v-icon>
     </v-btn>
-  </div>
+  </span>
 </template>
 
 <script>
 import TagLine from "../components/tag-line";
 
 export default {
-  "name": "TypeHeader",
+  "name": "TypeLine",
   "components": {
     "app-tags": TagLine,
   },
@@ -38,9 +29,6 @@ export default {
     "value": {"type": Object, "required": true},
   },
   "methods": {
-    "onCopyIri": function () {
-      navigator.clipboard.writeText(this.value.iri);
-    },
     "onEditType": function () {
       this.$emit("edit-type", this.value);
     },
