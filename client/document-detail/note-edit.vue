@@ -81,7 +81,7 @@ export default {
     "onChangeContent": function (value) {
       this.$emit("input", {
         ...this.value,
-        "content": value,
+        "text": value,
       });
     },
     "onClearImage": function () {
