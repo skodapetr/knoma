@@ -27,6 +27,18 @@
       @save="onSaveNoteTypeDialog"
       @close="onCloseNoteTypeDialog"
     />
+    <v-layout class="mt-6">
+      <v-flex />
+      <v-btn
+          class="mr-4"
+          @click="onSave"
+      >
+        Save
+      </v-btn>
+      <v-btn @click="onClose">
+        Close
+      </v-btn>
+    </v-layout>
   </v-container>
 </template>
 
