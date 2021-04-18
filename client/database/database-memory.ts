@@ -82,10 +82,15 @@ class InMemoryDatabase implements Database {
     // Add documents of required type.
     for (const document of this.documents) {
       const inSchema = document.properties[RDFS_HAS_IN_SCHEME] || [];
+      // We can add items if they are of given class or are part of a codelist.
       if (isIntersecting(inSchema, types)) {
+        result.add(document.iri);
+
+      } else  if (isIntersecting(document.types, types)) {
         result.add(document.iri);
       }
     }
+    console.log("getCodelist", types, "->", result);
     return [...result];
   }
 
@@ -141,7 +146,7 @@ function isIntersecting(left: string[], right: string[]): boolean {
   return false;
 }
 
-function documentToPredicate(document: Document) : Predicate {
+function documentToPredicate(document: Document): Predicate {
   const codelist = document.properties[RDFS_HAS_DOMAIN];
   return {
     "iri": document.iri,
