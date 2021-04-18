@@ -3,13 +3,13 @@
     <h2>Content language</h2>
     <ul>
       <li>
-        <code>\ref{IRI}</code> - Reference to another source defined with IRI.
+        <code>\url{IRI}</code> - Reference to another source defined with IRI.
       </li>
       <li>
-        <code>\cite{DOI}</code> - Reference to an article defined with DOI.
+        <code>\doi{DOI}</code> - Reference to an article defined with DOI.
       </li>
       <li>
-        <code>\begin{X}</code>, <code>\end{X}</code> - Starts and end a section.
+        <code>\keyword{text}</code> - Mark given text as a keyword, term.
       </li>
     </ul>
     <h2>Types</h2>
