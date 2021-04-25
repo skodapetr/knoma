@@ -40,7 +40,6 @@
       @input="onChangeDescription"
     />
     <v-layout>
-      <v-flex />
       <v-btn
         class="mr-4"
         @click="onSave"
