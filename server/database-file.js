@@ -8,7 +8,9 @@ module.exports = bindRoutes;
 
 function bindRoutes(router) {
   router.get("/documents-file", createGetHandler());
-  router.post("/documents-file", bodyParser.json(), createPostHandler());
+  router.post("/documents-file", bodyParser.json({
+    "limit": "128mb"
+  }), createPostHandler());
 }
 
 function createGetHandler() {
