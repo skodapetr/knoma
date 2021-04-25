@@ -57,15 +57,21 @@
         @paste="onPaste"
       />
       <img
-        v-show="value.image"
+        v-show="value.image && this.showImage"
         :src="value.image"
         style="border-style: ridge;"
       >
     </v-card-text>
     <v-card-actions>
       <v-btn
-        v-show="value.image"
-        @click="onClearImage"
+          v-show="value.image"
+          @click="onToggleImage"
+      >
+        Toggle Image
+      </v-btn>
+      <v-btn
+          v-show="value.image && this.showImage"
+          @click="onClearImage"
       >
         Clear Image
       </v-btn>
@@ -84,6 +90,9 @@ export default {
   "props": {
     "value": {"type": Object, "required": true},
   },
+  "data": () => ({
+    "showImage": false,
+  }),
   "methods": {
     "onCopyIri": function () {
       navigator.clipboard.writeText(this.value.iri);
@@ -130,6 +139,9 @@ export default {
     },
     "onEditType": function () {
       this.$emit("edit-type", this.value);
+    },
+    "onToggleImage": function () {
+      this.showImage = !this.showImage;
     },
   },
 };
