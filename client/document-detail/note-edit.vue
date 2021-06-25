@@ -59,7 +59,7 @@
       <img
         v-show="value.image && this.showImage"
         :src="value.image"
-        style="border-style: ridge;"
+        style="border-style: ridge;background-color: wheat;width: 100%;"
       >
     </v-card-text>
     <v-card-actions>
