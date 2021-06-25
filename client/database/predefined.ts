@@ -41,6 +41,13 @@ const PREDICATES: Predicate[] = [
     "codelist": undefined,
     "domain": undefined,
   }, {
+    "iri": "https://knoma.skodapetr.eu/vocabulary#author",
+    "label": "Author",
+    "multiple": false,
+    "type": PredicateEditType.String,
+    "codelist": undefined,
+    "domain": undefined,
+  }, {
     "iri": "https://knoma.skodapetr.eu/vocabulary#published",
     "label": "Published",
     "multiple": false,
