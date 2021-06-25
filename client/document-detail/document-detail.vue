@@ -115,7 +115,19 @@ export default {
     },
     "onSave": async function () {
       this.loading = true;
-      await getDatabase().storeDocument(this.document);
+      try {
+        await getDatabase().storeDocument(this.document);
+        this.$notify({
+          "title": "Document saved.",
+          "type": "success",
+        });
+      } catch (ex) {
+        this.$notify({
+          "title": "Can't save data.",
+          "type": "error",
+        });
+        throw ex;
+      }
       this.loading = false;
     },
     "onClose": function () {

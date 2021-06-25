@@ -105,7 +105,7 @@ class InMemoryDatabase implements Database {
   }
 
   private async postDocuments(): Promise<void> {
-    axios.post("api/v1/documents-file", {
+    await axios.post("api/v1/documents-file", {
       "documents": this.documents,
     });
   }

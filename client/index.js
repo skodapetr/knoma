@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuetify from "vuetify";
 import VueRouter from "vue-router";
+import VueNotifications from "vue-notification";
 
 import "vuetify/dist/vuetify.min.css";
 
@@ -9,6 +10,7 @@ import Layout from "./application/layout.vue";
 
 Vue.use(Vuetify);
 Vue.use(VueRouter);
+Vue.use(VueNotifications);
 
 /* eslint-disable no-new */
 new Vue({
