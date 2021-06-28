@@ -8,7 +8,7 @@
     class="pr-2"
     item-value="iri"
     item-text="label"
-    label="Add new predicate"
+    :label="label"
     autofocus
   />
 </template>
@@ -21,7 +21,8 @@ import {getDatabase} from "../database";
 export default {
   "name": "PropertySelector",
   "props": {
-    "types": {"type": Array, "required": true},
+    "label": {"type": String, "required": true},
+    "types": {"type": Array, "required": false, "default": undefined},
   },
   "data": () => ({
     "value": "",

@@ -44,6 +44,7 @@
         </v-list-item>
         <v-list-item>
           <app-property-selector
+            label="Add new predicate"
             :types="types"
             @add="onAdd"
           />
@@ -55,7 +56,7 @@
 
 <script>
 import PropertyEdit from "./properties-dialog-item";
-import PropertySelector from "./property-selector";
+import PropertySelector from "../components/property-selector";
 
 export default {
   "name": "PropertiesDialog",
