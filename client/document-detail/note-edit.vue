@@ -57,21 +57,21 @@
         @paste="onPaste"
       />
       <img
-        v-show="value.image && this.showImage"
+        v-show="value.image && showImage"
         :src="value.image"
         style="border-style: ridge;background-color: wheat;width: 100%;"
       >
     </v-card-text>
     <v-card-actions>
       <v-btn
-          v-show="value.image"
-          @click="onToggleImage"
+        v-show="value.image"
+        @click="onToggleImage"
       >
         Toggle Image
       </v-btn>
       <v-btn
-          v-show="value.image && this.showImage"
-          @click="onClearImage"
+        v-show="value.image && showImage"
+        @click="onClearImage"
       >
         Clear Image
       </v-btn>
