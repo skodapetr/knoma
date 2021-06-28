@@ -27,7 +27,7 @@ class FileDatabase implements Database {
 
   documents: Document[] = [];
 
-  documentsAreDirty : boolean = true;
+  documentsAreDirty  = true;
 
   async getDocuments(): Promise<Document[]> {
     await this.refreshDocuments();
@@ -142,15 +142,6 @@ function documentToPredicate(document: Document): Predicate {
     "codelist": codelist || [],
     "domain": undefined,
   };
-}
-
-function find(document: Document[], iri: string): number | undefined {
-  for (let index = 0; index < document.length; ++index) {
-    if (document[index].iri == iri) {
-      return index;
-    }
-  }
-  return undefined;
 }
 
 export function createFileDatabase(): Database {

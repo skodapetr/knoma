@@ -92,7 +92,7 @@ function saveDatabaseFile(res) {
 function createDeleteHandler() {
   return (req, res) => {
     const iri = req.query.iri;
-    const documents = databaseFile.documents
+    const documents = databaseFile.documents;
     for (let index = 0; index < documents.length; ++index) {
       if (documents[index].iri === iri) {
         documents.splice(index, 1);
