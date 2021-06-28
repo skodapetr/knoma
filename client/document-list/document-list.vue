@@ -1,8 +1,12 @@
 <template>
   <v-container>
+    <app-filter
+      v-model="source.filters"
+      @change="reload"
+    />
     <v-list>
       <app-item
-        v-for="item in documents"
+        v-for="item in source.documents"
         :key="item.iri"
         :value="item"
         @open="onOpen"
@@ -33,20 +37,21 @@
 <script>
 import {getDatabase} from "../database";
 import Item from "./document-list-item";
+import Filter from "./document-filter";
+import {FilteredDocumentSource} from "./filtered-document-source";
 
 export default {
   "name": "DocumentList",
   "components": {
     "app-item": Item,
+    "app-filter": Filter,
   },
   "data": () => ({
-    "documents": [],
+    "source": new FilteredDocumentSource(),
     "loading": false,
   }),
   "mounted": async function mounted() {
-    this.loading = true;
-    this.documents = await getDatabase().getDocuments();
-    this.loading = false;
+    await this.reload();
   },
   "methods": {
     "onOpen": function (iri) {
@@ -61,13 +66,19 @@ export default {
       this.loading = true;
       const database = getDatabase();
       await database.deleteDocument(iri);
-      this.documents = await database.getDocuments();
       this.loading = false;
+      //
+      await this.reload();
     },
     "onCreate": function () {
       this.$router.push({
         "name": "document-edit",
       });
+    },
+    "reload": async function() {
+      this.loading = true;
+      await this.source.refresh();
+      this.loading = false;
     },
   },
 };
