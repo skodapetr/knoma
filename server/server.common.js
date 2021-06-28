@@ -1,11 +1,11 @@
 const express = require("express");
 const logger = require("./logging");
 const config = require("./configuration");
-const databaseApi = require("./database-file");
+const database = require("./database-file");
 
 function initialize(app) {
   const router = express.Router();
-  databaseApi(router);
+  database(router);
   app.use("/api/v1", router);
 }
 

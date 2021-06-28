@@ -4,7 +4,6 @@ import {Database} from "./database-api";
 import {
   Document,
   DocumentWithData,
-  Note,
   Predicate,
   PredicateEditType,
 } from "./model";
@@ -20,37 +19,40 @@ const RDFS_HAS_DOMAIN = "http://www.w3.org/2000/01/rdf-schema#domain";
 
 const RDFS_HAS_IN_SCHEME = "http://www.w3.org/2004/02/skos/core#inScheme";
 
-class InMemoryDatabase implements Database {
+/**
+ * Use API to fetch list of documents and work with documents. The list of
+ * documents (index) is fetched on the client side.
+ */
+class FileDatabase implements Database {
 
-  private fetched = false;
+  documents: Document[] = [];
 
-  private documents: DocumentWithData[] = [];
+  documentsAreDirty : boolean = true;
 
   async getDocuments(): Promise<Document[]> {
-    await this.fetchDatabaseFile();
+    await this.refreshDocuments();
     return this.documents;
   }
 
-  private async fetchDatabaseFile(): Promise<void> {
-    if (this.fetched) {
-      return;
+  /**
+   * Update documents from server if needed.
+   */
+  private async refreshDocuments() {
+    if (this.documentsAreDirty) {
+      const response = await axios.get("api/v1/documents");
+      this.documents = response.data;
+      this.documentsAreDirty = false;
     }
-    const response = await axios.get("api/v1/documents-file");
-    this.documents = response.data.documents;
   }
 
   async getDocument(iri: string): Promise<DocumentWithData | undefined> {
-    await this.fetchDatabaseFile();
-    for (const document of this.documents) {
-      if (document.iri === iri) {
-        return copyDocument(document);
-      }
-    }
-    return undefined;
+    const url = "api/v1/documents?iri=" + encodeURIComponent(iri);
+    const response = await axios.get(url);
+    return response.data;
   }
 
   async getPredicates(): Promise<Predicate[]> {
-    await this.fetchDatabaseFile();
+    await this.refreshDocuments();
     const result = [...getCorePredicate()];
     for (const document of this.documents) {
       if (document.types.includes(RDFS_PROPERTY)) {
@@ -71,7 +73,7 @@ class InMemoryDatabase implements Database {
   }
 
   async getCodelist(types: string[]): Promise<string[]> {
-    await this.fetchDatabaseFile();
+    await this.refreshDocuments();
     const result: Set<string> = new Set();
     // Add core items.
     for (const type of types) {
@@ -90,36 +92,19 @@ class InMemoryDatabase implements Database {
         result.add(document.iri);
       }
     }
-    console.log("getCodelist", types, "->", result);
     return [...result];
   }
 
   async storeDocument(document: DocumentWithData): Promise<void> {
-    const index = find(this.documents, document.iri);
-    if (index === undefined) {
-      this.documents.push(document);
-    } else {
-      this.documents[index] = document;
-    }
-    await this.postDocuments();
-  }
-
-  private async postDocuments(): Promise<void> {
-    await axios.post("api/v1/documents-file", {
-      "documents": this.documents,
-    });
+    const url = "api/v1/documents?iri=" + encodeURIComponent(document.iri);
+    await axios.post(url, document);
+    this.documentsAreDirty = true;
   }
 
   async deleteDocument(iri: string): Promise<void> {
-    const index = find(this.documents, iri);
-    if (index === undefined) {
-      return;
-    }
-    this.documents = [
-      ...this.documents.slice(0, index),
-      ...this.documents.slice(index + 1),
-    ];
-    await this.postDocuments();
+    const url = "api/v1/documents?iri=" + encodeURIComponent(iri);
+    await axios.delete(url);
+    this.documentsAreDirty = true;
   }
 
   async getLabel(iri: string): Promise<string> {
@@ -168,37 +153,6 @@ function find(document: Document[], iri: string): number | undefined {
   return undefined;
 }
 
-function copyDocument(source: DocumentWithData): DocumentWithData {
-  return {
-    ...source,
-    "types": [...source.types],
-    "items": copyItems(source.items),
-    "properties": copyProperties(source.properties),
-  };
-}
-
-function copyItems(notes: Note[]): Note[] {
-  const result: Note[] = [];
-  for (const note of notes) {
-    result.push({
-      ...note,
-      "types": [...note.types],
-      "properties": copyProperties(note.properties),
-    });
-  }
-  return result;
-}
-
-function copyProperties(
-  properties: Record<string, string[]>,
-): Record<string, string[]> {
-  const result: Record<string, string[]> = {};
-  for (const [key, values] of Object.entries(properties)) {
-    result[key] = [...values];
-  }
-  return result;
-}
-
-export function createInMemoryDatabase(): Database {
-  return new InMemoryDatabase();
+export function createFileDatabase(): Database {
+  return new FileDatabase();
 }

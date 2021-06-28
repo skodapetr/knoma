@@ -1,11 +1,11 @@
 import {Database} from "./database-api";
-import {createInMemoryDatabase} from "./database-memory";
+import {createFileDatabase} from "./database-simple";
 
 export * from "./database-api";
 export * from "./model";
 export * from "./model-factory";
 
-const database = createInMemoryDatabase();
+const database = createFileDatabase();
 
 export function getDatabase(): Database {
   return database;
