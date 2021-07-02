@@ -35,8 +35,11 @@ export default {
     "value": {"type": Object, "required": true},
   },
   "methods": {
-    "onOpen": function () {
-      this.$emit("open", this.value.iri);
+    "onOpen": function (event) {
+      this.$emit("open", {
+        "iri": this.value.iri,
+        "ctrlKey": event.ctrlKey,
+      });
     },
     "onDelete": function () {
       this.$emit("delete", this.value.iri);

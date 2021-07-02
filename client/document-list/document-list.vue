@@ -54,13 +54,19 @@ export default {
     await this.reload();
   },
   "methods": {
-    "onOpen": function (iri) {
-      this.$router.push({
+    "onOpen": function (event) {
+      const location = {
         "name": "document-edit",
         "query": {
-          "document": iri,
+          "document": event.iri,
         },
-      });
+      };
+      if (event.ctrlKey) {
+        const url = this.$router.resolve(location).href;
+        window.open(url, "_blank");
+      } else {
+        this.$router.push(location);
+      }
     },
     "onDelete": async function (iri) {
       this.loading = true;
