@@ -15,7 +15,7 @@
           item-text="title"
           item-value="iri"
           label="Type"
-          multiple
+          :multiple="multiple"
           chips
           @input="onChange"
         />
@@ -46,9 +46,11 @@ import {getDatabase} from "../database";
 export default {
   "name": "CodelistDialog",
   "props": {
-    "value": {"type": Array, "required": true},
+    "value": {"required": true},
     "codelist": {"type": Array, "required": true},
     "visible": {"type": Boolean, "required": true},
+    "multiple": {"type": Boolean, "default": true},
+    "refreshOnShow": {"type": Boolean, "default": false},
   },
   "data": () => ({
     "items": [],
@@ -56,6 +58,16 @@ export default {
   }),
   "watch": {
     "visible": async function () {
+      if (this.refreshOnShow) {
+        await this.refresh();
+      }
+    },
+  },
+  "mounted": async function() {
+    await this.refresh();
+  },
+  "methods": {
+    "refresh": async function() {
       const database = getDatabase();
       this.loading = true;
       const iris = await database.getCodelist(this.codelist);
@@ -69,8 +81,6 @@ export default {
       this.items = tags;
       this.loading = false;
     },
-  },
-  "methods": {
     "onChange": function (value) {
       this.$emit("input", value);
     },

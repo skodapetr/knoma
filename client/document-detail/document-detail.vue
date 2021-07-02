@@ -45,7 +45,7 @@
 import Header from "./Document-detail-header";
 import Items from "./Document-detail-notes";
 import PropertyDialog from "./properties-dialog";
-import CodelistDialog from "./codelist-dialog";
+import CodelistDialog from "../components/codelist-dialog";
 import {createDocument, getDatabase} from "../database";
 
 export default {

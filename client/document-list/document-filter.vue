@@ -6,12 +6,22 @@
       @input="onSearchInput"
       @change="onChange"
     />
+    <app-type-filter
+      :value="value"
+      @input="onInput"
+      @change="onChange"
+    />
   </v-container>
 </template>
 
 <script>
+import TypeFilter from "./type-filter";
+
 export default {
   "name": "DocumentFilter",
+  "components": {
+    "app-type-filter": TypeFilter,
+  },
   "props": {
     "value": {"type": Object, "required": true},
   },
@@ -25,8 +35,8 @@ export default {
     "onChange": function () {
       this.$emit("change");
     },
-    "onAddProperty": function () {
-
+    "onInput": function(value) {
+      this.$emit("input", value);
     },
   },
 };
