@@ -76,6 +76,16 @@ const PREDICATES: Predicate[] = [
   },
 ];
 
+(function initialize() {
+  copyPredicateLabelsToLabels();
+})();
+
+function copyPredicateLabelsToLabels() {
+  for (const predicate of PREDICATES) {
+    LABELS[predicate.iri] = predicate.label;
+  }
+}
+
 export function getCoreLabel(type: string): string | undefined {
   return LABELS[type];
 }
