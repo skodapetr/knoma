@@ -8,11 +8,15 @@ export interface TypeFilter {
 
 }
 
+export type PropertyFilters = { [iri: string]: string[] };
+
 export class DocumentFilters {
 
   search = "";
 
   types: TypeFilter[] = [];
+
+  properties: PropertyFilters = {};
 
 }
 
@@ -30,7 +34,8 @@ export class FilteredDocumentSource {
 
   private filterDocument(document: Document): boolean {
     return this.filterBySearch(document)
-      && this.filterByType(document);
+      && this.filterByType(document)
+      && this.filterByProperties(document);
   }
 
   private filterBySearch(document: Document): boolean {
@@ -59,6 +64,26 @@ export class FilteredDocumentSource {
         continue;
       }
       return false;
+    }
+    return true;
+  }
+
+  private filterByProperties(document: Document): boolean {
+    for (const [iri, filterValues] of Object.entries(this.filters.properties)) {
+      const documentValues = document.properties[iri];
+      if (documentValues === undefined) {
+        return false;
+      }
+      // If no values are provided just check that there is a value.
+      for (const filterValue of filterValues) {
+        if (filterValue === "") {
+          continue;
+        }
+        if (documentValues.includes(filterValue)) {
+          continue;
+        }
+        return false;
+      }
     }
     return true;
   }

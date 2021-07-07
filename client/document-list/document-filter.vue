@@ -11,16 +11,23 @@
       @input="onInput"
       @change="onChange"
     />
+    <app-property-filter
+      :value="value"
+      @input="onInput"
+      @change="onChange"
+    />
   </v-container>
 </template>
 
 <script>
 import TypeFilter from "./type-filter";
+import PropertyFilter from "./property-filter";
 
 export default {
   "name": "DocumentFilter",
   "components": {
     "app-type-filter": TypeFilter,
+    "app-property-filter": PropertyFilter,
   },
   "props": {
     "value": {"type": Object, "required": true},

@@ -2,19 +2,6 @@
   <div>
     <div>
       Tags:
-      <v-chip
-        v-for="(tag, index) in tags"
-        :key="tag.iri"
-        :color="tag.include ? 'green' : 'red'"
-        small
-        close
-        class="mr-2"
-        @click:close="onRemoveType(index)"
-      >
-        {{ tag.label }}
-      </v-chip>
-    </div>
-    <div>
       <v-btn
         icon
         @click="onAddInclude"
@@ -32,6 +19,17 @@
         </v-icon>
       </v-btn>
     </div>
+    <v-chip
+      v-for="(tag, index) in tags"
+      :key="tag.iri"
+      :color="tag.include ? 'green' : 'red'"
+      small
+      close
+      class="mr-2"
+      @click:close="onRemoveType(index)"
+    >
+      {{ tag.label }}
+    </v-chip>
     <app-codelist-dialog
       v-model="dialog.items"
       :visible="dialog.visible"
