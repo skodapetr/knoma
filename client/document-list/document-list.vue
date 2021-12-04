@@ -4,7 +4,7 @@
       v-model="source.filters"
       @change="reload"
     />
-    <v-list>
+    <v-list class="item-list">
       <app-item
         v-for="item in source.documents"
         :key="item.iri"
@@ -99,5 +99,9 @@ export default {
   position: fixed;
   right: 1rem;
   bottom: -0.9rem;
+}
+
+.item-list {
+  margin-bottom: 5rem;
 }
 </style>
