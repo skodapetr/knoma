@@ -24,11 +24,11 @@
           {{ name }}
           <ul>
             <li
-              v-for="(value, index) in values"
-              v-show="value !== ''"
+              v-for="(item, index) in values"
+              v-show="item !== ''"
               :key="index"
             >
-              {{ value }}
+              {{ item }}
             </li>
           </ul>
         </li>

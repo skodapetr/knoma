@@ -46,7 +46,7 @@ import {getDatabase} from "../database";
 export default {
   "name": "CodelistDialog",
   "props": {
-    "value": {"required": true},
+    "value": {"type": Object, "required": true},
     "codelist": {"type": Array, "required": true},
     "visible": {"type": Boolean, "required": true},
     "multiple": {"type": Boolean, "default": true},
