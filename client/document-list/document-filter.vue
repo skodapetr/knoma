@@ -38,6 +38,7 @@ export default {
         ...this.value,
         "search": value,
       });
+      this.$emit("change");
     },
     "onChange": function () {
       this.$emit("change");
