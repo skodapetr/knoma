@@ -48,6 +48,7 @@
     <v-card-text class="pb-0">
       <v-textarea
         :value="value.text"
+        class="note-content-input"
         auto-grow
         clearable
         clear-icon="mdi-close-circle"
@@ -55,6 +56,7 @@
         label="Content"
         @input="onChangeContent"
         @paste="onPaste"
+        @keydown="onKeyDown"
       />
       <img
         v-show="value.image && showImage"
@@ -80,7 +82,9 @@
 </template>
 
 <script>
+import Vue from "vue";
 import TypeLine from "./type-line";
+import {onKeyAltDown} from "./note-edit-service";
 
 export default {
   "name": "NoteEdit",
@@ -115,6 +119,23 @@ export default {
     "onAdd": function () {
       this.$emit("add");
     },
+    "onKeyDown": function (event) {
+      if (event.altKey) {
+        let result = onKeyAltDown(this.value.text, event);
+        if (result === null) {
+          return;
+        }
+        this.$emit("input", {
+          ...this.value,
+          "text": result.value,
+        });
+        Vue.nextTick(() => {
+          event.target.selectionStart = result.positionStart;
+          event.target.selectionEnd = result.positionEnd;
+        });
+        event.preventDefault();
+      }
+    },
     "onPaste": function (event) {
       for (const item of event.clipboardData.items) {
         if (!item.type.includes("image")) {
@@ -134,7 +155,7 @@ export default {
         break;
       }
     },
-    "onEditProperties": function() {
+    "onEditProperties": function () {
       this.$emit("edit-properties", this.value);
     },
     "onEditType": function () {

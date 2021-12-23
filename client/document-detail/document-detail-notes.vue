@@ -25,7 +25,7 @@
 
 <script>
 import NoteItemEdit from "./note-edit";
-import {createNote} from "../database";
+import {createNewNote} from "./document-detail-service";
 
 export default {
   "name": "DocumentDetailNotes",
@@ -47,7 +47,7 @@ export default {
     "onInsert": function (index) {
       this.$emit("input", [
         ...this.value.slice(0, index + 1),
-        this.createNewNote(),
+        createNewNote(this.iri, this.value),
         ...this.value.slice(index + 1),
       ]);
     },
@@ -60,20 +60,8 @@ export default {
     "onAppend": function () {
       this.$emit("input", [
         ...this.value,
-        this.createNewNote(),
+        createNewNote(this.iri, this.value),
       ]);
-    },
-    "createNewNote": function () {
-      let iri = this.iri;
-      let nextIndex = 0;
-      if (this.value.length > 0) {
-        const lastIri = this.value[this.value.length - 1].iri;
-        const number = lastIri.substr(lastIri.lastIndexOf("/") + 1);
-        nextIndex = Number(number) + 1;
-      }
-      return createNote(
-        iri + "/note/" + String(nextIndex).padStart(3, "0"),
-        "");
     },
     "onEditProperties": function(owner) {
       this.$emit("edit-properties", owner);

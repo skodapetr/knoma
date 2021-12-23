@@ -42,11 +42,18 @@
 </template>
 
 <script>
+import Vue from "vue";
 import Header from "./Document-detail-header";
 import Items from "./Document-detail-notes";
 import PropertyDialog from "../components/properties-dialog";
 import CodelistDialog from "../components/codelist-dialog";
 import {createDocument, getDatabase} from "../database";
+import {
+  createNewNote,
+  focusNextNote,
+  focusPreviousNote,
+  getTextAreas,
+} from "./document-detail-service";
 
 export default {
   "name": "DocumentDetail",
@@ -71,8 +78,9 @@ export default {
       "data": [],
     },
   }),
-  "mounted": async function (){
-    const iri =  this.$route.query.document;
+  "mounted": async function () {
+    window.document.addEventListener("keydown", this.onKeyDown);
+    const iri = this.$route.query.document;
     if (iri === undefined) {
       return;
     }
@@ -83,7 +91,31 @@ export default {
     }
     this.loading = false;
   },
+  "destroyed": function () {
+    window.document.removeEventListener("keydown", this.onKeyDown);
+  },
   "methods": {
+    "onKeyDown": function (event) {
+      if (event.ctrlKey && event.key === "s") {
+        this.onSave();
+        event.preventDefault();
+      } else if (event.altKey && event.key === "a") {
+        this.document.items = [
+          ...this.document.items,
+          createNewNote(this.document.iri, this.document.items),
+        ];
+        Vue.nextTick(() => {
+          getTextAreas().pop().focus();
+        });
+        event.preventDefault();
+      } else if (event.altKey && event.key === "ArrowUp") {
+        focusPreviousNote();
+        event.preventDefault();
+      } else if (event.altKey && event.key === "ArrowDown") {
+        focusNextNote();
+        event.preventDefault();
+      }
+    },
     "onOpenPropertiesDialog": function (owner) {
       this.propertyDialog = {
         "open": true,
