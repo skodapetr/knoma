@@ -11,16 +11,25 @@
       <v-spacer />
       <v-btn
         :to="{'name':'documents'}"
-        text
         class="mr-6"
+        text
       >
         Documents
       </v-btn>
       <v-btn
         :to="{'name':'about'}"
+        class="mr-6"
         text
       >
         About
+      </v-btn>
+      <v-btn
+        href="https://github.com/skodapetr/knoma/issues"
+        rel="noopener noreferrer"
+        target="_blank"
+        text
+      >
+        GitHub
       </v-btn>
     </v-app-bar>
     <v-main>
