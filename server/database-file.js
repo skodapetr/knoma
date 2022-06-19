@@ -45,6 +45,7 @@ function createGetHandler() {
 function handleIndexRequest(res) {
   const documents = databaseFile.documents
     .map(document => ({...document, "items": undefined}));
+  documents.reverse();
   res.json(documents);
 }
 
