@@ -22,7 +22,7 @@ const CODE_LISTS: { [type: string]: string[] } = {
     "https://skodapetr.github.io/knoma/vocabulary#PlainText",
     "https://skodapetr.github.io/knoma/vocabulary#Markdown",
     "https://skodapetr.github.io/knoma/vocabulary#LaTex",
-    "https://skodapetr.github.io/knoma/vocabulary#HTML"
+    "https://skodapetr.github.io/knoma/vocabulary#HTML",
   ],
 };
 

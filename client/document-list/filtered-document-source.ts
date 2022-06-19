@@ -28,7 +28,7 @@ export class FilteredDocumentSource {
 
   filters: DocumentFilters = new DocumentFilters();
 
-  visibleLimit: number = 12;
+  visibleLimit = 12;
 
   async refresh(): Promise<void> {
     const database = getDatabase();
@@ -93,7 +93,7 @@ export class FilteredDocumentSource {
     return true;
   }
 
-  showMore() {
+  showMore(): void {
     this.visibleLimit += 12;
     this.visibleDocuments = this.documents.slice(0, this.visibleLimit);
   }
