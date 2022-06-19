@@ -4,7 +4,7 @@ const LABELS: { [iri: string]: string } = {
   "http://www.w3.org/2004/02/skos/core#ConceptScheme": "Concept Scheme",
   "http://www.w3.org/2004/02/skos/core#Concept": "Concept",
   "http://www.w3.org/2000/01/rdf-schema#Property": "Property",
-  "http://www.w3.org/2000/01/rdf-schema#Class": "Class"
+  "http://www.w3.org/2000/01/rdf-schema#Class": "Class",
 };
 
 const CODE_LISTS: { [type: string]: string[] } = {
@@ -12,7 +12,7 @@ const CODE_LISTS: { [type: string]: string[] } = {
     "http://www.w3.org/2004/02/skos/core#ConceptScheme",
     "http://www.w3.org/2004/02/skos/core#Concept",
     "http://www.w3.org/2000/01/rdf-schema#Property",
-    "http://www.w3.org/2000/01/rdf-schema#Class"
+    "http://www.w3.org/2000/01/rdf-schema#Class",
   ],
 };
 
@@ -71,6 +71,14 @@ const PREDICATES: Predicate[] = [
     // Used by Notes to reference another note or a document.
     "iri": "https://knoma.skodapetr.eu/vocabulary#ref",
     "label": "Reference",
+    "multiple": false,
+    "type": PredicateEditType.String,
+    "codelist": undefined,
+    "domain": undefined,
+  }, {
+    // If set the note is visible in the list with particular color.
+    "iri": "https://knoma.skodapetr.eu/vocabulary#listColor",
+    "label": "List color",
     "multiple": false,
     "type": PredicateEditType.String,
     "codelist": undefined,
