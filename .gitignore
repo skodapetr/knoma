@@ -1,6 +1,7 @@
 .* 
 
 *.iml
+*.png
 
 data/
 node_modules/
