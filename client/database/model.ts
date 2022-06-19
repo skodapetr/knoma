@@ -1,3 +1,9 @@
+/**
+ * Document represents unit of user interaction. Like a collection
+ * of papers that one would employ to take notes on a particular topic.
+ *
+ * This is used mostly as a document reference.
+ */
 export interface Document {
 
   iri: string;
@@ -14,12 +20,19 @@ export interface Document {
 
 }
 
+/**
+ * Document may contain notes.
+ */
 export interface DocumentWithData extends Document {
 
   items: Note[];
 
 }
 
+/**
+ * A piece of information user add to a document. Represent a note,
+ * one would put on a paper.
+ */
 export interface Note {
 
   iri: string;
@@ -37,7 +50,8 @@ export interface Note {
 }
 
 /**
- * Can be used to connect properties to documents and notes.
+ * Can be used to connect properties to documents and notes. Predicate
+ * can be predefined or be a document with proper types.
  */
 export interface Predicate {
 
@@ -61,13 +75,16 @@ export interface Predicate {
   codelist: string[] | undefined;
 
   /**
-   * May limit classes required to allow for predicate search. Set to undefined
-   * to apply no limitation.
+   * May limit classes required to allow for predicate search.
+   * If undefined there are no limitations.
    */
   domain: string[] | undefined;
 
 }
 
+/**
+ * Codelist of predicate edit types, those determine input type.
+ */
 export enum PredicateEditType {
   String = "string",
   Date = "date",
