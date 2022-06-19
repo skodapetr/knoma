@@ -6,12 +6,35 @@
     />
     <v-list class="item-list">
       <app-item
-        v-for="item in source.documents"
+        v-for="item in source.visibleDocuments"
         :key="item.iri"
         :value="item"
         @open="onOpen"
         @delete="onDelete"
       />
+      <v-divider></v-divider>
+      <v-list-item>
+        <v-list-item-content
+            v-if="source.visibleLimit < source.documents.length"
+        >
+          <div>
+            Showing {{source.visibleLimit}}
+            out of {{source.documents.length}}
+            documents.
+          </div>
+          <v-btn
+              class="mt-2"
+              @click="onShowMore"
+          >
+            Show more
+          </v-btn>
+        </v-list-item-content>
+        <v-list-item-content
+            v-else
+        >
+          All of {{source.documents.length}} documents are visible.
+        </v-list-item-content>
+      </v-list-item>
     </v-list>
     <div class="floating-menu">
       <v-btn
@@ -85,6 +108,9 @@ export default {
       this.loading = true;
       await this.source.refresh();
       this.loading = false;
+    },
+    "onShowMore": function() {
+      this.source.showMore();
     },
   },
 };

@@ -24,12 +24,17 @@ export class FilteredDocumentSource {
 
   documents: Document[] = [];
 
+  visibleDocuments: Document[] = [];
+
   filters: DocumentFilters = new DocumentFilters();
+
+  visibleLimit: number = 12;
 
   async refresh(): Promise<void> {
     const database = getDatabase();
     const documents = await database.getDocuments();
     this.documents = documents.filter(doc => this.filterDocument(doc));
+    this.visibleDocuments = this.documents.slice(0, this.visibleLimit);
   }
 
   private filterDocument(document: Document): boolean {
@@ -86,6 +91,11 @@ export class FilteredDocumentSource {
       }
     }
     return true;
+  }
+
+  showMore() {
+    this.visibleLimit += 12;
+    this.visibleDocuments = this.documents.slice(0, this.visibleLimit);
   }
 
 }
