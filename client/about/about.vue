@@ -3,44 +3,38 @@
     <h2>Content language</h2>
     <ul>
       <li>
-        <code>\url{IRI}</code> -
-        Reference to an external document.
+        Link with given <em>name</em> and <em>URL</em>.<br>
+        <code>[{name}}]({URL}})</code><br>
+        There are some specific domains that can be used:
+        <ul>
+          <li>
+            <code>doi://</code> - Reference to a document with DOI.
+          </li>
+          <li>
+            <code>cite://</code> - Reference to a citation inside a document.
+          </li>
+        </ul>
       </li>
       <li>
-        <code>\ref{IRI}</code> -
-        Reference to an internal document or note document.
+        Highlight given word as important.<br>
+        <code>**Keyword**</code>
       </li>
       <li>
-        <code>\doi{DOI}</code> -
-        Reference to an article defined with DOI.
+        Code without any other specification.<br>
+        <code>```code```</code>
       </li>
       <li>
-        <code>\keyword{text}</code> -
-        Mark given text as a keyword.
+        Code of given <em>{type}</em>:
+        <pre><code>```{type}
+...
+```</code></pre>
+        You can use <code>```Quote...</code> to mark a quote from the source document.
       </li>
       <li>
-        <code>\cite{number}</code> -
-        A citation, reference to the references section of an article.
-        They should be replaced with
-        <code>\url{IRI}</code> or <code>\doi{DOI}</code>,
-        with the second being the preferred option.
-      </li>
-      <li>
-        <code>\begin{itemize} \item ... \end{itemize}</code> -
-        Create a list of items in LaTeX style.
-      </li>
-      <li>
-        <code>\begin{anchor}{name} ... \end{anchor}</code> -
-        Create an anchor so the text can be references by other notes
-        and documents.
-      </li>
-      <li>
-        <code>\begin{quote} ... \end{quote}</code> -
-        Represent exact copy of a text from the source.
-      </li>
-      <li>
-        <code>\begin{code} ... \end{code}</code> -
-        Represent a source code.
+        Item list:
+        <pre><code>* Item
+ * Item
+ * Item</code></pre>
       </li>
     </ul>
     <h2>Types</h2>
@@ -84,14 +78,6 @@
       <li>
         <code>ctrl + s</code> -
         In document detail, save current document.
-      </li>
-      <li>
-        <code>alt + q</code> -
-        In note text area, insert quote.
-      </li>
-      <li>
-        <code>alt + c</code> -
-        In note text area, insert code.
       </li>
       <li>
         <code>alt + a</code> -
