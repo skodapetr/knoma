@@ -39,6 +39,7 @@
       label="Description"
       @input="onChangeDescription"
     />
+    <properties-preview :value="value" />
     <v-layout>
       <v-btn
         class="mr-4"
@@ -55,11 +56,13 @@
 
 <script>
 import TypeLine from "./type-line";
+import PropertiesPreview from "./document-properties-preview";
 
 export default {
   "name": "DocumentDetailHeader",
   "components": {
     "app-types": TypeLine,
+    "properties-preview": PropertiesPreview,
   },
   "props": {
     "value": {"type": Object, "required": true},
