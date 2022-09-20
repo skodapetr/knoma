@@ -5,10 +5,6 @@ const LABELS: { [iri: string]: string } = {
   "http://www.w3.org/2004/02/skos/core#Concept": "Concept",
   "http://www.w3.org/2000/01/rdf-schema#Property": "Property",
   "http://www.w3.org/2000/01/rdf-schema#Class": "Class",
-  "https://skodapetr.github.io/knoma/vocabulary#PlainText": "Plain Text",
-  "https://skodapetr.github.io/knoma/vocabulary#Markdown": "Markdown",
-  "https://skodapetr.github.io/knoma/vocabulary#LaTex": "LaTex",
-  "https://skodapetr.github.io/knoma/vocabulary#HTML": "HTML",
 };
 
 const CODE_LISTS: { [type: string]: string[] } = {
@@ -17,12 +13,6 @@ const CODE_LISTS: { [type: string]: string[] } = {
     "http://www.w3.org/2004/02/skos/core#Concept",
     "http://www.w3.org/2000/01/rdf-schema#Property",
     "http://www.w3.org/2000/01/rdf-schema#Class",
-  ],
-  "https://skodapetr.github.io/knoma/vocabulary#ContentType": [
-    "https://skodapetr.github.io/knoma/vocabulary#PlainText",
-    "https://skodapetr.github.io/knoma/vocabulary#Markdown",
-    "https://skodapetr.github.io/knoma/vocabulary#LaTex",
-    "https://skodapetr.github.io/knoma/vocabulary#HTML",
   ],
 };
 
@@ -93,16 +83,6 @@ const PREDICATES: Predicate[] = [
     "multiple": false,
     "type": PredicateEditType.String,
     "codelist": undefined,
-    "domain": undefined,
-  }, {
-    // Used by notes to reference another note or a document.
-    "iri": "https://skodapetr.github.io/knoma/vocabulary#contentType",
-    "label": "Content type",
-    "multiple": false,
-    "type": PredicateEditType.Codelist,
-    "codelist": [
-      "https://skodapetr.github.io/knoma/vocabulary#ContentType",
-    ],
     "domain": undefined,
   },
 ];
