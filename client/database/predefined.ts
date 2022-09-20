@@ -104,7 +104,7 @@ const PREDICATES: Predicate[] = [
     // In addition to listColor user can specify priority. If not set default
     // is zero. This value is used to order tags in the document list.
     "iri": "https://skodapetr.github.io/knoma/vocabulary#listPriority",
-    "label": "List order",
+    "label": "List priority",
     "multiple": false,
     "type": PredicateEditType.String,
     "codelist": undefined,
