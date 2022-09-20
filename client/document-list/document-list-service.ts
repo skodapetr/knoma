@@ -3,13 +3,14 @@ import {Document, getDatabase, PredicateEditType} from "../database";
 export type TagWithColour = {
   label: string;
   color: string;
+  priority: number;
 }
 
 export async function buildDocumentTagList(
   document: Document,
-) : Promise<TagWithColour[]> {
+): Promise<TagWithColour[]> {
   const database = getDatabase();
-  const result = [];
+  const result: TagWithColour[] = [];
   for (const iri of Object.keys(document.properties).sort()) {
     const predicate = await database.getPredicate(iri);
     if (predicate === undefined) {
@@ -19,7 +20,7 @@ export async function buildDocumentTagList(
     if (color === undefined) {
       continue;
     }
-    const priority = predicate.listPriority;
+    const priority: number = predicate.listPriority ?? 0;
     if (predicate.type === PredicateEditType.Codelist) {
       for (const value of document.properties[iri]) {
         const label = await database.getLabel(value);
