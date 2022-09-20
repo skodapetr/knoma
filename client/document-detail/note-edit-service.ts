@@ -6,7 +6,6 @@ export type TextWithCursor = {
 
 export function onKeyAltDown(
   text: string, event: KeyboardEvent): TextWithCursor | null {
-  const key = event.key;
   const target = event.target as HTMLInputElement;
   const start = target.selectionStart;
   const end = target.selectionEnd;

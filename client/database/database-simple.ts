@@ -13,11 +13,20 @@ import {
   getCorePredicate,
 } from "./predefined";
 
-const RDFS_PROPERTY = "http://www.w3.org/2000/01/rdf-schema#Property";
+const RDFS_PROPERTY =
+  "http://www.w3.org/2000/01/rdf-schema#Property";
 
-const RDFS_HAS_DOMAIN = "http://www.w3.org/2000/01/rdf-schema#domain";
+const RDFS_HAS_DOMAIN =
+  "http://www.w3.org/2000/01/rdf-schema#domain";
 
-const RDFS_HAS_IN_SCHEME = "http://www.w3.org/2004/02/skos/core#inScheme";
+const RDFS_HAS_IN_SCHEME =
+  "http://www.w3.org/2004/02/skos/core#inScheme";
+
+const LIST_COLOR =
+  "https://skodapetr.github.io/knoma/vocabulary#listColor";
+
+const LIST_PRIORITY =
+  "https://skodapetr.github.io/knoma/vocabulary#listPriority";
 
 /**
  * Use API to fetch list of documents and work with documents. The list of
@@ -133,6 +142,8 @@ function isIntersecting(left: string[], right: string[]): boolean {
 
 function documentToPredicate(document: Document): Predicate {
   const codelist = document.properties[RDFS_HAS_DOMAIN];
+  const listColour = document.properties[LIST_COLOR];
+  const listPriority = document.properties[LIST_PRIORITY];
   return {
     "iri": document.iri,
     "label": document.title,
@@ -141,6 +152,8 @@ function documentToPredicate(document: Document): Predicate {
       PredicateEditType.String : PredicateEditType.Codelist,
     "codelist": codelist || [],
     "domain": undefined,
+    "listColour" : listColour?.[0],
+    "listPriority": parseInt(listPriority?.[0] ?? "0"),
   };
 }
 

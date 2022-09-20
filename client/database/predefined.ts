@@ -28,6 +28,8 @@ const PREDICATES: Predicate[] = [
     "domain": [
       "http://www.w3.org/2004/02/skos/core#Concept",
     ],
+    "listColour" : undefined,
+    "listPriority": undefined,
   }, {
     "iri": "https://skodapetr.github.io/knoma/vocabulary#url",
     "label": "URL",
@@ -35,6 +37,8 @@ const PREDICATES: Predicate[] = [
     "type": PredicateEditType.String,
     "codelist": undefined,
     "domain": undefined,
+    "listColour" : undefined,
+    "listPriority": undefined,
   }, {
     "iri": "https://skodapetr.github.io/knoma/vocabulary#doi",
     "label": "DOI",
@@ -42,6 +46,8 @@ const PREDICATES: Predicate[] = [
     "type": PredicateEditType.String,
     "codelist": undefined,
     "domain": undefined,
+    "listColour" : undefined,
+    "listPriority": undefined,
   }, {
     "iri": "https://skodapetr.github.io/knoma/vocabulary#author",
     "label": "Author",
@@ -49,6 +55,8 @@ const PREDICATES: Predicate[] = [
     "type": PredicateEditType.String,
     "codelist": undefined,
     "domain": undefined,
+    "listColour" : undefined,
+    "listPriority": undefined,
   }, {
     "iri": "https://skodapetr.github.io/knoma/vocabulary#published",
     "label": "Published",
@@ -56,6 +64,8 @@ const PREDICATES: Predicate[] = [
     "type": PredicateEditType.Date,
     "codelist": undefined,
     "domain": undefined,
+    "listColour" : undefined,
+    "listPriority": undefined,
   }, {
     "iri": "http://www.w3.org/2000/01/rdf-schema#domain",
     "label": "Domain",
@@ -67,6 +77,8 @@ const PREDICATES: Predicate[] = [
     "domain": [
       "http://www.w3.org/2000/01/rdf-schema#Property",
     ],
+    "listColour" : undefined,
+    "listPriority": undefined,
   }, {
     // Used by notes to reference another note or a document.
     "iri": "https://skodapetr.github.io/knoma/vocabulary#ref",
@@ -75,6 +87,8 @@ const PREDICATES: Predicate[] = [
     "type": PredicateEditType.String,
     "codelist": undefined,
     "domain": undefined,
+    "listColour" : undefined,
+    "listPriority": undefined,
   }, {
     // If document is a value in a codelist and this values is set,
     // it determines the color the value is shown in the list.
@@ -84,6 +98,19 @@ const PREDICATES: Predicate[] = [
     "type": PredicateEditType.String,
     "codelist": undefined,
     "domain": undefined,
+    "listColour" : undefined,
+    "listPriority": undefined,
+  }, {
+    // In addition to listColor user can specify priority. If not set default
+    // is zero. This value is used to order tags in the document list.
+    "iri": "https://skodapetr.github.io/knoma/vocabulary#listPriority",
+    "label": "List order",
+    "multiple": false,
+    "type": PredicateEditType.String,
+    "codelist": undefined,
+    "domain": undefined,
+    "listColour" : undefined,
+    "listPriority": undefined,
   },
 ];
 

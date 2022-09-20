@@ -8,6 +8,15 @@
         :value="value.types"
         small
       />
+      <v-chip
+        v-for="(tag, index) in tags"
+        :key="index"
+        :small="true"
+        :color="tag.color"
+        class="mr-2"
+      >
+        {{ tag.label }}
+      </v-chip>
     </v-list-item-subtitle>
     <v-list-item-action>
       <v-btn
@@ -25,6 +34,7 @@
 
 <script>
 import TagLine from "../components/tag-line";
+import {buildDocumentTagList} from "./document-list-service";
 
 export default {
   "name": "DocumentListItem",
@@ -33,6 +43,12 @@ export default {
   },
   "props": {
     "value": {"type": Object, "required": true},
+  },
+  "data": () => ({
+    "tags": [],
+  }),
+  "mounted": async function () {
+    await this.refresh();
   },
   "methods": {
     "onOpen": function (event) {
@@ -43,6 +59,9 @@ export default {
     },
     "onDelete": function () {
       this.$emit("delete", this.value.iri);
+    },
+    "refresh": async function () {
+      this.tags = await buildDocumentTagList(this.value);
     },
   },
 };

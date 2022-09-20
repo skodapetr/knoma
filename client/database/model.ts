@@ -80,6 +80,16 @@ export interface Predicate {
    */
   domain: string[] | undefined;
 
+  /**
+   * If set values are shown as tags in list with given color
+   * */
+  listColour: string | undefined;
+
+  /**
+   * Higher number mean higher position in the tag list.
+   * */
+  listPriority: number | undefined;
+
 }
 
 /**
