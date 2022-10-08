@@ -43,8 +43,8 @@
 
 <script>
 import Vue from "vue";
-import Header from "./Document-detail-header";
-import Items from "./Document-detail-notes";
+import Header from "./document-detail-header";
+import Items from "./document-detail-notes";
 import PropertyDialog from "../components/properties-dialog";
 import CodelistDialog from "../components/codelist-dialog";
 import {createDocument, getDatabase} from "../database";
