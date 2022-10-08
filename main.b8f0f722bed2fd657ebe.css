@@ -1,0 +1,36 @@
+
+.outer[data-v-e3a9abc4] {
+  border-bottom: 1px solid gray;
+  margin-bottom: 1rem;
+  padding-top: 0;
+}
+dl[data-v-e3a9abc4] {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 1rem;
+}
+dl dd[data-v-e3a9abc4] {
+  margin-left: 1rem;
+}
+dl dd[data-v-e3a9abc4]:after {
+  content: ",";
+}
+dl dd[data-v-e3a9abc4]:last-child:after {
+  content: "";
+}
+
+
+.bottom[data-v-649a38ca] {
+  bottom: 2rem;
+}
+.floating-menu[data-v-649a38ca] {
+  position: fixed;
+  right: 1rem;
+  bottom: -0.9rem;
+}
+.item-list[data-v-649a38ca] {
+  margin-bottom: 5rem;
+}
+
+
+/*# sourceMappingURL=main.b8f0f722bed2fd657ebe.css.map*/
