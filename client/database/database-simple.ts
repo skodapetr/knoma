@@ -1,5 +1,3 @@
-import axios from "axios";
-
 import {Database} from "./database-api";
 import {
   Document,
@@ -29,14 +27,13 @@ const LIST_PRIORITY =
   "https://skodapetr.github.io/knoma/vocabulary#listPriority";
 
 /**
- * Use API to fetch list of documents and work with documents. The list of
- * documents (index) is fetched on the client side.
+ * Base class for a simple database. Use document list fetched from server.
  */
-class FileDatabase implements Database {
+export abstract class SimpleDatabase implements Database {
 
-  documents: Document[] = [];
+  protected documents: Document[] = [];
 
-  documentsAreDirty  = true;
+  abstract getDatabaseLabel(): string;
 
   async getDocuments(): Promise<Document[]> {
     await this.refreshDocuments();
@@ -46,19 +43,9 @@ class FileDatabase implements Database {
   /**
    * Update documents from server if needed.
    */
-  private async refreshDocuments() {
-    if (this.documentsAreDirty) {
-      const response = await axios.get("api/v1/documents");
-      this.documents = response.data;
-      this.documentsAreDirty = false;
-    }
-  }
+  protected abstract refreshDocuments(): Promise<void>;
 
-  async getDocument(iri: string): Promise<DocumentWithData | undefined> {
-    const url = "api/v1/documents?iri=" + encodeURIComponent(iri);
-    const response = await axios.get(url);
-    return response.data;
-  }
+  abstract getDocument(iri: string): Promise<DocumentWithData | undefined>;
 
   async getPredicates(): Promise<Predicate[]> {
     await this.refreshDocuments();
@@ -97,24 +84,16 @@ class FileDatabase implements Database {
       if (isIntersecting(inSchema, types)) {
         result.add(document.iri);
 
-      } else  if (isIntersecting(document.types, types)) {
+      } else if (isIntersecting(document.types, types)) {
         result.add(document.iri);
       }
     }
     return [...result];
   }
 
-  async storeDocument(document: DocumentWithData): Promise<void> {
-    const url = "api/v1/documents?iri=" + encodeURIComponent(document.iri);
-    await axios.post(url, document);
-    this.documentsAreDirty = true;
-  }
+  abstract storeDocument(document: DocumentWithData): Promise<void>;
 
-  async deleteDocument(iri: string): Promise<void> {
-    const url = "api/v1/documents?iri=" + encodeURIComponent(iri);
-    await axios.delete(url);
-    this.documentsAreDirty = true;
-  }
+  abstract deleteDocument(iri: string): Promise<void>;
 
   async getLabel(iri: string): Promise<string> {
     const label = getCoreLabel(iri);
@@ -152,11 +131,7 @@ function documentToPredicate(document: Document): Predicate {
       PredicateEditType.String : PredicateEditType.Codelist,
     "codelist": codelist || [],
     "domain": undefined,
-    "listColour" : listColour?.[0],
+    "listColour": listColour?.[0],
     "listPriority": parseInt(listPriority?.[0] ?? "0"),
   };
-}
-
-export function createFileDatabase(): Database {
-  return new FileDatabase();
 }

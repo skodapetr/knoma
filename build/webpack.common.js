@@ -1,4 +1,5 @@
 const path = require("path");
+const webpack = require("webpack");
 const WebpackBar = require("webpackbar");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
@@ -52,5 +53,8 @@ module.exports = {
     }),
     new WebpackBar(),
     new VueLoaderPlugin(),
+    new webpack.DefinePlugin({
+      "__DATABASE__": 0,
+    }),
   ],
 };

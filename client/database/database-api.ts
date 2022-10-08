@@ -3,6 +3,11 @@ import {Document, DocumentWithData, Predicate} from "./model";
 export interface Database {
 
   /**
+   * Return database name visible to the user.
+   */
+  getDatabaseLabel(): string;
+
+  /**
    * Return all user created documents.
    */
   getDocuments(): Promise<Document[]>;
