@@ -1,8 +1,10 @@
 import {DocumentWithData, Note} from "./model";
+import {getConfiguration} from "../application/configuration";
 
 export function createDocument(): DocumentWithData {
+  const configuration = getConfiguration();
   return {
-    "iri": "http://localhost/" + createIdentifier(),
+    "iri": configuration.domain + createIdentifier(),
     "types": [],
     "title": "",
     "description": "",
@@ -20,10 +22,9 @@ function createIdentifier() {
   });
 }
 
-export function createNote(iri: string, text: string): Note {
+export function createNote(identifier: string, text: string): Note {
   return {
-    "iri": iri,
-    "types": [],
+    "identifier": identifier,
     "properties": {},
     "created": new Date().toISOString().substr(0, 10),
     "text": text,

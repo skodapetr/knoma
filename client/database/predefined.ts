@@ -1,5 +1,7 @@
 import {Predicate, PredicateEditType} from "./model";
 
+export const NOTE = "https://skodapetr.github.io/knoma/vocabulary#Note";
+
 const LABELS: { [iri: string]: string } = {
   "http://www.w3.org/2004/02/skos/core#ConceptScheme": "Concept Scheme",
   "http://www.w3.org/2004/02/skos/core#Concept": "Concept",

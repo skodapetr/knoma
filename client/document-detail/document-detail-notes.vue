@@ -5,6 +5,7 @@
       :key="item.iri"
     >
       <app-item
+        :document-iri="documentIri"
         :value="item"
         @input="(v) => onChange(index, v)"
         @add="() => onInsert(index)"
@@ -33,7 +34,7 @@ export default {
     "app-item": NoteItemEdit,
   },
   "props": {
-    "iri": {"type": String, "required": true},
+    "documentIri": {"type": String, "required": true},
     "value": {"type": Array, "required": true},
   },
   "methods": {

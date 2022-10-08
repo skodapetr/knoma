@@ -35,9 +35,10 @@ export interface DocumentWithData extends Document {
  */
 export interface Note {
 
-  iri: string;
-
-  types: string[];
+  /**
+   * Relative identifier.
+   */
+  identifier: string;
 
   properties: { [iri: string]: string[] },
 

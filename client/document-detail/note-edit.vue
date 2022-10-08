@@ -22,10 +22,6 @@
           mdi-pencil
         </v-icon>
       </v-btn>
-      <app-header
-        :value="value"
-        @edit-type="onEditType"
-      />
       <v-spacer />
       <v-btn
         icon
@@ -83,23 +79,21 @@
 
 <script>
 import Vue from "vue";
-import TypeLine from "./type-line";
 import {onKeyAltDown} from "./note-edit-service";
 
 export default {
   "name": "NoteEdit",
-  "components": {
-    "app-header": TypeLine,
-  },
   "props": {
     "value": {"type": Object, "required": true},
+    "documentIri": {"type": String, "required": true},
   },
   "data": () => ({
     "showImage": false,
   }),
   "methods": {
     "onCopyIri": function () {
-      navigator.clipboard.writeText(this.value.iri);
+      const iri = this.documentIri + "/notes/" + this.value.identifier;
+      navigator.clipboard.writeText(iri);
     },
     "onChangeContent": function (value) {
       this.$emit("input", {
@@ -157,9 +151,6 @@ export default {
     },
     "onEditProperties": function () {
       this.$emit("edit-properties", this.value);
-    },
-    "onEditType": function () {
-      this.$emit("edit-type", this.value);
     },
     "onToggleImage": function () {
       this.showImage = !this.showImage;

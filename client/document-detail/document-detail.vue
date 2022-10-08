@@ -9,7 +9,7 @@
     />
     <app-items
       v-model="document.items"
-      :iri="document.iri"
+      :document-iri="document.iri"
       @edit-properties="onOpenPropertiesDialog"
       @edit-type="onOpenNoteTypeDialog"
     />
@@ -54,6 +54,7 @@ import {
   focusPreviousNote,
   getTextAreas,
 } from "./document-detail-service";
+import {NOTE} from "../database/predefined";
 
 export default {
   "name": "DocumentDetail",
@@ -120,7 +121,8 @@ export default {
       this.propertyDialog = {
         "open": true,
         "owner": owner,
-        "types": owner.types,
+        // The note has no types, se we substitute with note type here.
+        "types": owner?.types ?? [NOTE],
         "data": cloneProperties(owner.properties),
       };
     },
