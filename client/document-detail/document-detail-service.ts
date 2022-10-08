@@ -10,12 +10,12 @@ export function createNewNote(iri: string, notes: Note[]): Note {
 
 export function getTextAreas(): HTMLInputElement[] {
   const selector = ".note-content-input textarea";
-  return [...window.document.querySelectorAll(selector) as HTMLInputElement];
+  return [...window.document.querySelectorAll(selector) as any];
 }
 
 export function focusPreviousNote(): void {
   const nodes = getTextAreas();
-  const active = document.activeElement as HTMLInputElement;
+  const active = document.activeElement as any;
   const index = nodes.indexOf(active);
   if (index < 1 || index - 1 > nodes.length) {
     return;
@@ -25,7 +25,7 @@ export function focusPreviousNote(): void {
 
 export function focusNextNote(): void {
   const nodes = getTextAreas();
-  const active = document.activeElement as HTMLInputElement;
+  const active = document.activeElement as any;
   const index = nodes.indexOf(active);
   if (index === -1 || index + 1 >= nodes.length) {
     return;
