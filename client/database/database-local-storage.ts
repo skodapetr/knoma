@@ -114,7 +114,7 @@ function addDemoContent(database: LocalStorageDatabase) {
         "identifier": "001",
         "properties": {},
         "created": now,
-        "text": "There might be tutorial one day ... ",
+        "text": "There might be a tutorial one day ... ",
         "image": undefined,
       },
       {
