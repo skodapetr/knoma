@@ -85,5 +85,45 @@ class LocalStorageDatabase extends SimpleDatabase implements Database {
 }
 
 export function createLocalStorageDatabase(): Database {
-  return new LocalStorageDatabase();
+  const result = new LocalStorageDatabase();
+  if (isFirstLoad()) {
+    addDemoContent(result);
+  }
+  return result;
+}
+
+function isFirstLoad(): boolean {
+  return localStorage.getItem(LIST_IDENTIFIER) === null;
+}
+
+function addDemoContent(database: LocalStorageDatabase) {
+  const now = new Date().toISOString().substr(0, 10);
+  database.storeDocument({
+    "iri": "http://example.com/note/001",
+    "created": now,
+    "title": "Click me!",
+    "description": "Welcome to Knowledge Manager.",
+    "types": [],
+    "properties": {
+      "https://skodapetr.github.io/knoma/vocabulary#author": [
+        "Petr Škoda"
+      ]
+    },
+    "items": [
+      {
+        "identifier": "001",
+        "properties": {},
+        "created": now,
+        "text": "There might be tutorial one day ... ",
+        "image": undefined,
+      },
+      {
+        "identifier": "002",
+        "properties": {},
+        "created": now,
+        "text": "This instance is using your local storage to store data.",
+        "image": undefined,
+      },
+    ],
+  });
 }
