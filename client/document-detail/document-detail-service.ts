@@ -2,7 +2,7 @@ import {createNote, Note} from "../database";
 
 export function createNewNote(iri: string, notes: Note[]): Note {
   const nextIndex = notes.map(note => Number(note.identifier))
-    .reduce((left, right) => Math.max(left, right), 0)
+    .reduce((left, right) => Math.max(left, right), 0) + 1;
   return createNote(String(nextIndex).padStart(3, "0"), "");
 }
 
