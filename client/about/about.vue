@@ -40,6 +40,10 @@ import AboutPredicates from "./about-predicates";
 import AboutText from "./about-text";
 import AboutTypes from "./about-types";
 
+/**
+ * About page, holds information about application configuration
+ * and documentation.
+ */
 export default {
   "name": "About",
   "components": {
@@ -50,6 +54,9 @@ export default {
     "app-types": AboutTypes,
   },
   "data": () => ({
+    /**
+     * Index of selected tab.
+     */
     "tab": 0,
   }),
 };

@@ -8,6 +8,10 @@
       <dd>Member of concept scheme.</dd>
       <dt>Property</dt>
       <dd>This document can be used as a property.</dd>
+      <dt>Class</dt>
+      <dd>This document can be used as a class/type for other documents.</dd>
+      <dt>Template</dt>
+      <dd>This document can be used as a template for new documents.</dd>
     </dl>
   </section>
 </template>

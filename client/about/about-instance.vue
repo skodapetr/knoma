@@ -3,7 +3,7 @@
     <h2>Instance</h2>
     <dl>
       <dt>Database:</dt>
-      <dd>{{ database }}</dd>
+      <dd>{{ databaseLabel }}</dd>
     </dl>
   </section>
 </template>
@@ -14,7 +14,7 @@ import {getDatabase} from "../database";
 export default {
   "name": "AboutInstance",
   "data": () => ({
-    "database": getDatabase().getDatabaseLabel(),
+    "databaseLabel": getDatabase().getDatabaseLabel(),
   }),
 };
 </script>
