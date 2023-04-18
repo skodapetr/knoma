@@ -1,56 +1,49 @@
 <template>
   <v-card
-    class="ma-2"
+    class="mx-2"
     width="100%"
   >
-    <v-card-title class="pb-0">
+    <v-card-title class="py-0 flex">
       <v-btn
-        icon
+        icon="mdi-share-variant"
+        size="small"
         class="ml-2 mr-4"
         @click="onCopyIri"
-      >
-        <v-icon>
-          mdi-share-variant
-        </v-icon>
-      </v-btn>
+      />
       <v-btn
-        icon
+        icon="mdi-pencil"
+        size="small"
         class="mr-4"
         @click="onEditProperties(value)"
-      >
-        <v-icon>
-          mdi-pencil
-        </v-icon>
-      </v-btn>
+      />
       <v-spacer />
       <v-btn
-        icon
+        icon="mdi-minus"
+        size="small"
+        variant="text"
+        color="red"
         class="mr-4"
         @click="onDelete"
-      >
-        <v-icon color="red">
-          mdi-minus
-        </v-icon>
-      </v-btn>
+      />
       <v-btn
-        icon
+        icon="mdi-plus"
+        size="small"
+        variant="text"
+        color="green"
         @click="onAdd()"
-      >
-        <v-icon color="green">
-          mdi-plus
-        </v-icon>
-      </v-btn>
+      />
     </v-card-title>
-    <v-card-text class="pb-0">
+    <v-card-text>
       <v-textarea
-        :value="value.text"
+        :model-value="value.text"
         class="note-content-input"
         auto-grow
         clearable
         clear-icon="mdi-close-circle"
         rows="1"
         label="Content"
-        @input="onChangeContent"
+        :hide-details="true"
+        @update:model-value="onChangeContent"
         @paste="onPaste"
         @keydown="onKeyDown"
       />
@@ -60,15 +53,14 @@
         style="border-style: ridge;background-color: wheat;width: 100%;"
       >
     </v-card-text>
-    <v-card-actions>
+    <v-card-actions v-show="value.image">
       <v-btn
-        v-show="value.image"
         @click="onToggleImage"
       >
         Toggle Image
       </v-btn>
       <v-btn
-        v-show="value.image && showImage"
+        v-show="showImage"
         @click="onClearImage"
       >
         Clear Image
@@ -78,7 +70,7 @@
 </template>
 
 <script>
-import Vue from "vue";
+import {nextTick} from "vue";
 import {onKeyAltDown} from "./note-edit-service";
 
 export default {
@@ -87,6 +79,21 @@ export default {
     "value": {"type": Object, "required": true},
     "documentIri": {"type": String, "required": true},
   },
+  "emits": [
+    "input",
+    /**
+     * Delete note.
+     */
+    "delete",
+    /**
+     * Insert new note after this one.
+     */
+    "add",
+    /**
+     * Change note properties.
+     */
+    "edit-properties",
+  ],
   "data": () => ({
     "showImage": false,
   }),
@@ -123,7 +130,7 @@ export default {
           ...this.value,
           "text": result.value,
         });
-        Vue.nextTick(() => {
+        nextTick(() => {
           event.target.selectionStart = result.positionStart;
           event.target.selectionEnd = result.positionEnd;
         });
@@ -158,3 +165,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.flex {
+  display: flex;
+}
+</style>

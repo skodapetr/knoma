@@ -3,8 +3,8 @@
     <v-chip
       v-for="tag in tags"
       :key="tag.iri"
-      :small="small"
-      class="mr-2"
+      :size="size"
+      class="ma-1"
       @click="onClick"
     >
       {{ tag.label }}
@@ -19,8 +19,14 @@ export default {
   "name": "TagLine",
   "props": {
     "value": {"type": Array, "required": true},
-    "small": {"type": Boolean, "default": false},
+    "size": {"type": String, "default": "default"},
   },
+  "emits": [
+    /**
+     * User clicked on a tag.
+     */
+    "click",
+  ],
   "data": () => ({
     "tags": [],
   }),

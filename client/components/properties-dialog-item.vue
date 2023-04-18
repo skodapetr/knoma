@@ -1,75 +1,87 @@
 <template>
-  <v-list>
-    <v-subheader>
-      <button @click="onDelete">
-        <v-icon color="red">
-          mdi-minus
-        </v-icon>
-      </button>
+  <v-list class="py-0">
+    <v-list-subheader>
+      <v-btn
+        icon="mdi-minus"
+        color="red"
+        size="x-small"
+        variant="text"
+        @click="onDelete"
+      />
       {{ definition.label }}
-    </v-subheader>
+    </v-list-subheader>
     <v-list-item
-      v-for="(content, index) in value"
+      v-for="(content, index) in modelValue"
       :key="index"
     >
-      <button
-        v-if="definition.multiple"
-        @click="onAddValue(index)"
-      >
-        <v-icon>
-          mdi-plus
-        </v-icon>
-      </button>
-      <button
-        v-if="definition.multiple"
-        @click="onDeleteValue(index)"
-      >
-        <v-icon>
-          mdi-minus
-        </v-icon>
-      </button>
-      <v-text-field
-        v-if="definition.type === 'string'"
-        :value="content"
-        @input="(v) => onUpdateValue(index, v)"
-      />
-      <app-date-picker
-        v-else-if="definition.type === 'date'"
-        :value="content"
-        @input="(v) => onUpdateValue(index, v)"
-      />
-      <v-select
-        v-else-if="definition.type === 'codelist'"
-        :value="content"
-        :items="items"
-        item-text="title"
-        item-value="iri"
-        @input="(v) => onUpdateValue(index, v)"
-      />
+      <div style="display: flex">
+        <v-btn
+          v-if="definition.multiple"
+          icon="mdi-plus"
+          variant="text"
+          size="small"
+          @click="onAddValue(index)"
+        />
+        <v-btn
+          v-if="definition.multiple"
+          icon="mdi-minus"
+          variant="text"
+          size="small"
+          @click="onDeleteValue(index)"
+        />
+        <v-text-field
+          v-if="definition.type === 'date'"
+          :model-value="content"
+          type="date"
+          density="compact"
+          :hide-details="true"
+          @update:model-value="(v) => onUpdateValue(index, v)"
+        />
+        <v-text-field
+          v-if="definition.type === 'string'"
+          :model-value="content"
+          density="compact"
+          :hide-details="true"
+          @update:model-value="(v) => onUpdateValue(index, v)"
+        />
+        <v-select
+          v-else-if="definition.type === 'codelist'"
+          :model-value="content"
+          :items="items"
+          item-text="title"
+          item-value="iri"
+          density="compact"
+          :hide-details="true"
+          @update:model-value="(v) => onUpdateValue(index, v)"
+        />
+      </div>
     </v-list-item>
-    <v-list-item v-if="value.length === 0">
-      <button @click="onAddValue()">
-        <v-icon>
-          mdi-plus
-        </v-icon>
-      </button>
+    <v-list-item v-if="modelValue.length === 0">
+      <v-btn
+        icon="mdi-plus"
+        size="x-small"
+        @click="onAddValue()"
+      />
     </v-list-item>
   </v-list>
 </template>
 
 <script>
 import {getDatabase} from "../database";
-import DatePicker from "./date-picker";
 
 export default {
   "name": "PropertiesDialogItem",
-  "components": {
-    "app-date-picker": DatePicker,
-  },
   "props": {
     "predicate": {"type": String, "required": true},
-    "value": {"type": Array, "required": true},
+    "modelValue": {"type": Array, "required": true},
   },
+  "emits": [
+    "update:model-value",
+    /**
+     * Delete item.
+     */
+    "delete",
+  ],
   "data": () => ({
     "definition": {},
     "loading": false,
@@ -97,25 +109,31 @@ export default {
       this.$emit("delete");
     },
     "onAddValue": function (index) {
-      this.$emit("input", [
-        ...this.value.slice(0, index + 1),
+      this.$emit("update:model-value", [
+        ...this.modelValue.slice(0, index + 1),
         "",
-        ...this.value.slice(index + 1),
+        ...this.modelValue.slice(index + 1),
       ]);
     },
     "onDeleteValue": function (index) {
-      this.$emit("input", [
-        ...this.value.slice(0, index),
-        ...this.value.slice(index + 1),
+      this.$emit("update:model-value", [
+        ...this.modelValue.slice(0, index),
+        ...this.modelValue.slice(index + 1),
       ]);
     },
     "onUpdateValue": function (index, value) {
-      this.$emit("input", [
-        ...this.value.slice(0, index),
+      this.$emit("update:model-value", [
+        ...this.modelValue.slice(0, index),
         value,
-        ...this.value.slice(index + 1),
+        ...this.modelValue.slice(index + 1),
       ]);
     },
   },
 };
 </script>
+
+<style scoped>
+.flex {
+  display: flex;
+}
+</style>

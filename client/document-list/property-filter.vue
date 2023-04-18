@@ -2,38 +2,22 @@
   <div>
     <div>
       Properties:
+      &nbsp;
       <v-btn
-        text
+        size="small"
         @click="onOpenPropertiesDialog"
       >
         Edit
       </v-btn>
+      &nbsp;
       <v-btn
-        text
+        size="small"
         @click="onClear"
       >
         Clear
       </v-btn>
     </div>
-    <div>
-      <ul>
-        <li
-          v-for="(values, name) in visual"
-          :key="name"
-        >
-          {{ name }}
-          <ul>
-            <li
-              v-for="(item, index) in values"
-              v-show="item !== ''"
-              :key="index"
-            >
-              {{ item }}
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </div>
+    <app-properties-preview :value="value" />
     <app-property-dialog
       v-model="properties"
       :visible="visible"
@@ -46,32 +30,30 @@
 
 <script>
 import PropertyDialog from "../components/properties-dialog";
-import {getDatabase} from "../database";
-import {PredicateEditType} from "../database";
+import PropertiesPreview from "../components/properties-preview";
 
 export default {
   "name": "PropertyFilter",
   "components": {
     "app-property-dialog": PropertyDialog,
+    "app-properties-preview": PropertiesPreview,
   },
   "props": {
     "value": {"type": Object, "required": true},
   },
+  "emits": [
+    "input",
+    /**
+     * Input value has changed.
+     */
+    "change",
+  ],
   "data": () => ({
     // Local copy of the data.
     "properties": {},
     "visible": false,
     "types": [],
-    "visual": {},
   }),
-  "watch": {
-    "value.properties": async function (oldValue, newValue) {
-      if (oldValue === newValue) {
-        return;
-      }
-      await this.computeVisual();
-    },
-  },
   "methods": {
     "onOpenPropertiesDialog": function () {
       this.properties = copyProperties(this.value.properties);
@@ -94,28 +76,6 @@ export default {
     },
     "onClosePropertiesDialog": function () {
       this.visible = false;
-    },
-    "computeVisual": async function () {
-      const database = getDatabase();
-      const properties = {};
-      (await database.getPredicates()).map(item => properties[item.iri] = item);
-      const result = {};
-      for (const [iri, values] of Object.entries(this.value.properties)) {
-        const property = properties[iri];
-        let valuesToShow = [];
-        switch (property.type) {
-          case PredicateEditType.Codelist:
-            for (const value of values) {
-              valuesToShow.push(await database.getLabel(value));
-            }
-            break;
-          default:
-            valuesToShow = values;
-            break;
-        }
-        result[property.label] = valuesToShow;
-      }
-      this.visual = Object.freeze(result);
     },
   },
 };

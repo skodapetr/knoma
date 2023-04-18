@@ -1,35 +1,33 @@
 <template>
   <div>
     <div>
-      Tags:
+      Types:
+      &nbsp;
       <v-btn
-        icon
+        icon="mdi-plus"
+        size="x-small"
         @click="onAddInclude"
-      >
-        <v-icon>
-          mdi-plus
-        </v-icon>
-      </v-btn>
+      />
+      &nbsp;
       <v-btn
-        icon
+        icon="mdi-minus"
+        size="x-small"
         @click="onAddExclude"
-      >
-        <v-icon>
-          mdi-minus
-        </v-icon>
-      </v-btn>
+      />
     </div>
-    <v-chip
-      v-for="(tag, index) in tags"
-      :key="tag.iri"
-      :color="tag.include ? 'green' : 'red'"
-      small
-      close
-      class="mr-2"
-      @click:close="onRemoveType(index)"
-    >
-      {{ tag.label }}
-    </v-chip>
+    <div class="tag-line">
+      <v-chip
+        v-for="(tag, index) in tags"
+        :key="tag.iri"
+        :color="tag.include ? 'green' : 'red'"
+        size="small"
+        class="mr-2"
+        closable
+        @click:close="onRemoveType(index)"
+      >
+        {{ tag.label }}
+      </v-chip>
+    </div>
     <app-codelist-dialog
       v-model="dialog.items"
       :visible="dialog.visible"
@@ -53,6 +51,13 @@ export default {
   "props": {
     "value": {"type": Object, "required": true},
   },
+  "emits": [
+    "input",
+    /**
+     * Input value has changed.
+     */
+    "change",
+  ],
   "data": () => ({
     "dialog": {
       "items": [],
@@ -78,9 +83,14 @@ export default {
       this.dialog.visible = true;
       this.dialog.include = false;
     },
-    "onSaveTypeDialog": function (iri) {
+    "onSaveTypeDialog": function (value) {
       this.dialog.visible = false;
       this.dialog.items = [];
+      if (value.length === 0) {
+        // No value.
+        return;
+      }
+      const iri = value[0];
       // Check if the element is already in the list.
       for (const index in this.value.types) {
         const item = this.value.types[index];
@@ -148,3 +158,11 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+
+.tag-line {
+  margin: 0.5rem;
+}
+
+</style>

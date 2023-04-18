@@ -1,7 +1,7 @@
 <template>
   <v-list>
     <v-list-item
-      v-for="(item, index) in value"
+      v-for="(item, index) in modelValue"
       :key="item.iri"
     >
       <app-item
@@ -11,15 +11,15 @@
         @add="() => onInsert(index)"
         @delete="() => onDelete(index)"
         @edit-properties="onEditProperties"
-        @edit-type="onEditType"
       />
     </v-list-item>
     <v-list-item>
-      <v-btn @click="onAppend()">
-        <v-icon color="green">
-          mdi-plus
-        </v-icon>
-      </v-btn>
+      <v-btn
+        icon="mdi-plus"
+        color="green"
+        variant="text"
+        @click="onAppend()"
+      />
     </v-list-item>
   </v-list>
 </template>
@@ -35,40 +35,44 @@ export default {
   },
   "props": {
     "documentIri": {"type": String, "required": true},
-    "value": {"type": Array, "required": true},
+    "modelValue": {"type": Array, "required": true},
   },
+  "emits": [
+    "update:model-value",
+    /**
+     * Change note properties.
+     */
+    "edit-properties",
+  ],
   "methods": {
     "onChange": function (index, value) {
-      this.$emit("input", [
-        ...this.value.slice(0, index),
+      this.$emit("update:model-value", [
+        ...this.modelValue.slice(0, index),
         value,
-        ...this.value.slice(index + 1),
+        ...this.modelValue.slice(index + 1),
       ]);
     },
     "onInsert": function (index) {
-      this.$emit("input", [
-        ...this.value.slice(0, index + 1),
-        createNewNote(this.iri, this.value),
-        ...this.value.slice(index + 1),
+      this.$emit("update:model-value", [
+        ...this.modelValue.slice(0, index + 1),
+        createNewNote(this.iri, this.modelValue),
+        ...this.modelValue.slice(index + 1),
       ]);
     },
     "onDelete": function (index) {
-      this.$emit("input", [
-        ...this.value.slice(0, index),
-        ...this.value.slice(index + 1),
+      this.$emit("update:model-value", [
+        ...this.modelValue.slice(0, index),
+        ...this.modelValue.slice(index + 1),
       ]);
     },
     "onAppend": function () {
-      this.$emit("input", [
-        ...this.value,
-        createNewNote(this.iri, this.value),
+      this.$emit("update:model-value", [
+        ...this.modelValue,
+        createNewNote(this.iri, this.modelValue),
       ]);
     },
     "onEditProperties": function(owner) {
       this.$emit("edit-properties", owner);
-    },
-    "onEditType": function (owner) {
-      this.$emit("edit-type", owner);
     },
   },
 };

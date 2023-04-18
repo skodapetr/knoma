@@ -1,22 +1,22 @@
 <template>
-  <v-container>
+  <div class="pb-2">
     <v-text-field
       label="Text search"
-      :value="value.search"
-      @input="onSearchInput"
+      :value="modelValue.search"
+      @update:model-value="onSearchInput"
       @change="onChange"
     />
     <app-type-filter
-      :value="value"
+      :value="modelValue"
       @input="onInput"
       @change="onChange"
     />
     <app-property-filter
-      :value="value"
+      :value="modelValue"
       @input="onInput"
       @change="onChange"
     />
-  </v-container>
+  </div>
 </template>
 
 <script>
@@ -30,12 +30,19 @@ export default {
     "app-property-filter": PropertyFilter,
   },
   "props": {
-    "value": {"type": Object, "required": true},
+    "modelValue": {"type": Object, "required": true},
   },
+  "emits": [
+    "update:model-value",
+    /**
+     * Input value has changed.
+     */
+    "change",
+  ],
   "methods": {
     "onSearchInput": function (value) {
-      this.$emit("input", {
-        ...this.value,
+      this.$emit("update:model-value", {
+        ...this.modelValue,
         "search": value,
       });
       this.$emit("change");
@@ -44,7 +51,7 @@ export default {
       this.$emit("change");
     },
     "onInput": function(value) {
-      this.$emit("input", value);
+      this.$emit("update:model-value", value);
     },
   },
 };

@@ -2,18 +2,15 @@
   <span>
     <app-tags
       :value="value.types"
-      small
       @click="onEditType"
     />
     <v-btn
       v-show="value.types.length === 0"
-      icon
+      size="small"
+      variant="text"
+      icon="mdi-plus"
       @click="onEditType"
-    >
-      <v-icon>
-        mdi-plus
-      </v-icon>
-    </v-btn>
+    />
   </span>
 </template>
 
@@ -28,9 +25,12 @@ export default {
   "props": {
     "value": {"type": Object, "required": true},
   },
+  "emits": [
+    "input",
+  ],
   "methods": {
     "onEditType": function () {
-      this.$emit("edit-type", this.value);
+      this.$emit("input", this.value);
     },
   },
 };

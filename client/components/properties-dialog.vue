@@ -1,6 +1,6 @@
 <template>
   <v-dialog
-    :value="visible"
+    :model-value="visible"
     fullscreen
     hide-overlay
     transition="dialog-bottom-transition"
@@ -12,32 +12,28 @@
         color="primary"
       >
         <v-btn
-          icon
+          icon="mdi-check"
           @click="onSave"
-        >
-          <v-icon>mdi-check</v-icon>
-        </v-btn>
+        />
         <v-toolbar-title>Edit Properties</v-toolbar-title>
         <v-spacer />
         <v-toolbar-items>
           <v-btn
-            icon
+            icon="mdi-close"
             @click="onClose"
-          >
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
+          />
         </v-toolbar-items>
       </v-toolbar>
       <v-list>
         <v-list-item
-          v-for="entry in Object.entries(value)"
+          v-for="entry in Object.entries(modelValue)"
           :key="entry[0]"
         >
           <v-list-item-title>
             <app-property-edit
               :predicate="entry[0]"
-              :value="entry[1]"
-              @input="(v) => onChange(entry[0], v)"
+              :model-value="entry[1]"
+              @update:model-value="(v) => onChange(entry[0], v)"
               @delete="onDelete(entry[0])"
             />
           </v-list-item-title>
@@ -65,28 +61,39 @@ export default {
     "app-property-selector": PropertySelector,
   },
   "props": {
-    "value": {"type": Object, "required": true},
+    "modelValue": {"type": Object, "required": true},
     "visible": {"type": Boolean, "required": true},
     "types": {"type": Array, "required": true},
   },
+  "emits": [
+    "update:model-value",
+    /**
+     * Close dialog.
+     */
+    "close",
+    /**
+     * Save and close the dialog.
+     */
+    "save",
+  ],
   "methods": {
     "onChange": function (key, value) {
-      this.$emit("input", {
-        ...this.value,
+      this.$emit("update:model-value", {
+        ...this.modelValue,
         [key]: value,
       });
     },
     "onDelete": function (key) {
-      const newValue = {...this.value};
+      const newValue = {...this.modelValue};
       delete newValue[key];
-      this.$emit("input", newValue);
+      this.$emit("update:model-value", newValue);
     },
     "onAdd": function (predicate) {
-      if (this.value[predicate.iri] !== undefined) {
+      if (this.modelValue[predicate.iri] !== undefined) {
         return;
       }
-      this.$emit("input", {
-        ...this.value,
+      this.$emit("update:model-value", {
+        ...this.modelValue,
         [predicate.iri]: [""],
       });
     },

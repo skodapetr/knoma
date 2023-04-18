@@ -1,20 +1,21 @@
 <template>
   <v-combobox
+    ref="input"
     v-model="value"
     :loading="loading"
     :disabled="loading"
     :items="filteredItems"
-    :auto-select-first="true"
-    class="pr-2"
-    item-value="iri"
-    item-text="label"
     :label="label"
+    class="px-4"
+    item-value="iri"
+    item-title="label"
+    return-object
     autofocus
   />
 </template>
 
 <script>
-import Vue from "vue";
+import {nextTick} from "vue";
 
 import {getDatabase} from "../database";
 
@@ -24,6 +25,12 @@ export default {
     "label": {"type": String, "required": true},
     "types": {"type": Array, "required": false, "default": undefined},
   },
+  "emits": [
+    /**
+     * Add new property.
+     */
+    "add",
+  ],
   "data": () => ({
     "value": "",
     "loading": false,
@@ -32,28 +39,29 @@ export default {
     "search": null,
   }),
   "watch": {
-    "value": function (value) {
-      if (value === "") {
+    "value": function (newValue) {
+      if (typeof(newValue) !== "object") {
         return;
       }
+      this.$emit("add", newValue);
       // Reset to nothing selected.
-      Vue.nextTick(() => {
+      nextTick(() => {
         this.value = "";
+        this.$refs.input.blur();
       });
-      this.$emit("add", value);
     },
     "types": function (value) {
-      this.filterItems(value);
+      this.updateFilteredItems(value);
     },
   },
   "mounted": async function () {
     this.loading = true;
     this.items = await getDatabase().getPredicates();
-    this.filterItems(this.types);
+    this.updateFilteredItems(this.types);
     this.loading = false;
   },
   "methods": {
-    "filterItems": function (types) {
+    "updateFilteredItems": function (types) {
       this.filteredItems = this.items
         .filter(item => shouldBeUsed(item.domain, types));
     },

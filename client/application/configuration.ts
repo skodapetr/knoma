@@ -18,8 +18,6 @@ const configuration = {
   "database": __DATABASE__,
 };
 
-console.log("Configuration", configuration);
-
 export function getConfiguration(): Configuration {
   return configuration;
 }

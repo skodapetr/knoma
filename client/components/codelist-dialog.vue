@@ -1,6 +1,6 @@
 <template>
   <v-dialog
-    :value="visible"
+    :model-value="visible"
     persistent
     @keydown.esc="onClose"
   >
@@ -10,14 +10,14 @@
       </v-card-title>
       <v-card-text class="mt-4">
         <v-select
-          :value="value"
+          :model-value="modelValue"
           :items="items"
-          item-text="title"
+          item-title="title"
           item-value="iri"
           label="Type"
           :multiple="multiple"
           chips
-          @input="onChange"
+          @update:model-value="onChange"
         />
       </v-card-text>
       <v-divider />
@@ -46,28 +46,48 @@ import {getDatabase} from "../database";
 export default {
   "name": "CodelistDialog",
   "props": {
-    "value": {"type": Array, "required": true},
+    "modelValue": {"type": Array, "required": true},
+    /**
+     * Name of a codelist to select values from.
+     */
     "codelist": {"type": Array, "required": true},
     "visible": {"type": Boolean, "required": true},
     "multiple": {"type": Boolean, "default": true},
     "refreshOnShow": {"type": Boolean, "default": false},
   },
+  "emits": [
+    "update:model-value",
+    /**
+     * Close dialog.
+     */
+    "close",
+    /**
+     * Save and close the dialog.
+     */
+    "save",
+  ],
   "data": () => ({
     "items": [],
     "loading": false,
   }),
   "watch": {
-    "visible": async function () {
+    "visible": async function (newVisibility) {
+      if (!newVisibility) {
+        // Hiding the dialog.
+        return;
+      }
+      console.log("onShow", this.modelValue);
       if (this.refreshOnShow) {
-        await this.refresh();
+        await this.reloadCodelistFromDatabase();
       }
     },
   },
   "mounted": async function() {
-    await this.refresh();
+    await this.reloadCodelistFromDatabase();
+    console.log("mounted", this.items);
   },
   "methods": {
-    "refresh": async function() {
+    "reloadCodelistFromDatabase": async function() {
       const database = getDatabase();
       this.loading = true;
       const iris = await database.getCodelist(this.codelist);
@@ -82,15 +102,21 @@ export default {
       this.loading = false;
     },
     "onChange": function (value) {
-      this.$emit("input", value);
+      if (!this.multiple) {
+        // When used without multiple, value is string instead of an array.
+        value = [value];
+      }
+      console.log("onChange", value);
+      this.$emit("update:model-value", value);
     },
     "onClose": function () {
+      console.log("onClose", this.modelValue);
       this.$emit("close");
     },
     "onSave": function () {
-      this.$emit("save", this.value);
+      console.log("onSave", this.modelValue);
+      this.$emit("save", this.modelValue);
     },
   },
 };
 </script>
-

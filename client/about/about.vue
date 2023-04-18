@@ -10,26 +10,26 @@
       <v-tab>Predicates</v-tab>
       <v-tab>Text</v-tab>
     </v-tabs>
-    <v-tabs-items
+    <v-window
       v-model="tab"
       style="padding: 2rem;"
     >
-      <v-tab-item>
+      <v-window-item>
         <app-instance />
-      </v-tab-item>
-      <v-tab-item>
+      </v-window-item>
+      <v-window-item>
         <app-keyboard />
-      </v-tab-item>
-      <v-tab-item>
+      </v-window-item>
+      <v-window-item>
         <app-types />
-      </v-tab-item>
-      <v-tab-item>
+      </v-window-item>
+      <v-window-item>
         <app-predicates />
-      </v-tab-item>
-      <v-tab-item>
+      </v-window-item>
+      <v-window-item>
         <app-text />
-      </v-tab-item>
-    </v-tabs-items>
+      </v-window-item>
+    </v-window>
   </v-container>
 </template>
 
@@ -45,7 +45,7 @@ import AboutTypes from "./about-types";
  * and documentation.
  */
 export default {
-  "name": "About",
+  "name": "AboutView",
   "components": {
     "app-instance": AboutInstance,
     "app-keyboard": AboutKeyboard,

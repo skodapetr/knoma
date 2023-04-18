@@ -1,25 +1,37 @@
-import Vue from "vue";
-import Vuetify from "vuetify";
-import VueRouter from "vue-router";
-import VueNotifications from "vue-notification";
+import {createApp} from "vue";
+import {createRouter, createWebHashHistory} from "vue-router";
+import Notifications from "@kyvg/vue3-notification";
+// Vuetify
+import "vuetify/styles";
+import { createVuetify } from "vuetify";
+import * as components from "vuetify/components";
+import * as directives from "vuetify/directives";
 
-import "vuetify/dist/vuetify.min.css";
+import routes from "./application/routes";
+import Application from "./application/layout.vue";
 
-import router from "./application/router";
-import Layout from "./application/layout.vue";
-
-Vue.use(Vuetify);
-Vue.use(VueRouter);
-Vue.use(VueNotifications);
-
-/* eslint-disable no-new */
-new Vue({
-  "el": "#application",
-  "router": router,
-  "vuetify": new Vuetify({
-    "theme": {
-      "dark": true,
-    },
-  }),
-  "render": (createElement) => createElement(Layout),
+const router = createRouter({
+  "history": createWebHashHistory(),
+  "routes": routes,
 });
+
+const vuetify = createVuetify({
+  "components": components,
+  "directives": directives,
+  "theme": {
+    "defaultTheme": "dark",
+    "themes": {
+      "dark": {
+        "colors": {
+          "primary": "#3739FF",
+        },
+      },
+    },
+  },
+});
+
+const app = createApp(Application);
+app.use(vuetify);
+app.use(router);
+app.use(Notifications);
+app.mount("#application");

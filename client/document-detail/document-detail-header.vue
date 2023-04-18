@@ -1,45 +1,44 @@
 <template>
-  <v-container>
+  <div>
     <div>
       <v-btn
-        icon
+        icon="mdi-share-variant"
+        size="small"
+        variant="text"
         class="ml-2 mr-4"
         @click="onCopyIri"
-      >
-        <v-icon>
-          mdi-share-variant
-        </v-icon>
-      </v-btn>
+      />
       <v-btn
-        icon
+        icon="mdi-pencil"
+        size="small"
+        variant="text"
         class="mr-4"
-        @click="onEditProperties(value)"
-      >
-        <v-icon>
-          mdi-pencil
-        </v-icon>
-      </v-btn>
+        @click="onEditProperties(modelValue)"
+      />
       <app-types
-        :value="value"
-        @edit-type="onEditType"
+        :value="modelValue"
+        @input="onEditType"
       />
     </div>
     <v-text-field
-      :value="value.title"
+      :model-value="modelValue.title"
       label="Title *"
       required
-      @input="onChangeTitle"
+      @update:model-value="onChangeTitle"
     />
     <v-textarea
-      :value="value.description"
+      :model-value="modelValue.description"
       auto-grow
       clearable
       clear-icon="mdi-close-circle"
       rows="1"
       label="Description"
-      @input="onChangeDescription"
+      @update:model-value="onChangeDescription"
     />
-    <properties-preview :value="value" />
+    <div class="outer">
+      Properties:
+      <app-properties-preview :value="modelValue" />
+    </div>
     <v-layout>
       <v-btn
         class="mr-4"
@@ -51,35 +50,54 @@
         Close
       </v-btn>
     </v-layout>
-  </v-container>
+  </div>
 </template>
 
 <script>
 import TypeLine from "./type-line";
-import PropertiesPreview from "./document-properties-preview";
+import PropertiesPreview from "../components/properties-preview";
 
 export default {
   "name": "DocumentDetailHeader",
   "components": {
     "app-types": TypeLine,
-    "properties-preview": PropertiesPreview,
+    "app-properties-preview": PropertiesPreview,
   },
   "props": {
-    "value": {"type": Object, "required": true},
+    "modelValue": {"type": Object, "required": true},
   },
+  "emits": [
+    "update:model-value",
+    /**
+     * Change document type.
+     */
+    "edit-type",
+    /**
+     * Change document properties.
+     */
+    "edit-properties",
+    /**
+     * Save document.
+    */
+    "save",
+    /**
+     * Close document.
+     */
+    "close",
+  ],
   "methods": {
     "onCopyIri": function () {
-      navigator.clipboard.writeText(this.value.iri);
+      navigator.clipboard.writeText(this.modelValue.iri);
     },
     "onChangeTitle": function (value) {
-      this.$emit("input", {
-        ...this.value,
+      this.$emit("update:model-value", {
+        ...this.modelValue,
         "title": value,
       });
     },
     "onChangeDescription": function (value) {
-      this.$emit("input", {
-        ...this.value,
+      this.$emit("update:model-value", {
+        ...this.modelValue,
         "description": value,
       });
     },
@@ -87,7 +105,7 @@ export default {
       this.$emit("edit-type", owner);
     },
     "onEditProperties": function() {
-      this.$emit("edit-properties", this.value);
+      this.$emit("edit-properties", this.modelValue);
     },
     "onSave": function () {
       this.$emit("save");
@@ -98,3 +116,12 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.outer {
+  border-bottom: 1px solid gray;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding-top: 0;
+}
+</style>

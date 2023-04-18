@@ -30,6 +30,9 @@ export default {
   "props": {
     "value": {"type": String, "required": true},
   },
+  "emits": [
+    "input",
+  ],
   "data": () => ({
     "visible": false,
   }),

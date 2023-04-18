@@ -1,6 +1,5 @@
 <template>
-  <v-container class="outer">
-    Properties:
+  <div>
     <dl
       v-for="predicate of content"
       :key="predicate.iri"
@@ -13,14 +12,14 @@
         {{ item }}
       </dd>
     </dl>
-  </v-container>
+  </div>
 </template>
 
 <script>
 import {getDatabase} from "../database";
 
 export default {
-  "name": "DocumentPropertiesPreview",
+  "name": "PropertiesPreview",
   "props": {
     "value": {"type": Object, "required": true},
   },
@@ -73,11 +72,6 @@ async function predicateToValues(database, predicate, values) {
 </script>
 
 <style scoped>
-.outer {
-  border-bottom: 1px solid gray;
-  margin-bottom: 1rem;
-  padding-top: 0;
-}
 dl {
   display: flex;
   flex-wrap: wrap;

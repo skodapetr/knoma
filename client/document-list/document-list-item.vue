@@ -3,32 +3,32 @@
     <v-list-item-title>
       {{ value.title || value.iri }}
     </v-list-item-title>
+
     <v-list-item-subtitle>
       <app-tags
         :value="value.types"
-        small
+        size="small"
       />
       <v-chip
         v-for="(tag, index) in tags"
         :key="index"
-        :small="true"
         :color="tag.color"
-        class="mr-2"
+        size="small"
+        variant="outlined"
+        class="ma-1"
       >
         {{ tag.label }}
       </v-chip>
     </v-list-item-subtitle>
-    <v-list-item-action>
+
+    <template #append>
       <v-btn
-        icon
         color="red"
+        icon="mdi-delete"
+        variant="text"
         @click.stop="onDelete"
-      >
-        <v-icon>
-          mdi-delete
-        </v-icon>
-      </v-btn>
-    </v-list-item-action>
+      />
+    </template>
   </v-list-item>
 </template>
 
@@ -44,6 +44,16 @@ export default {
   "props": {
     "value": {"type": Object, "required": true},
   },
+  "emits": [
+    /**
+     * Open this item.
+     */
+    "open",
+    /**
+     * Delete item.
+     */
+    "delete",
+  ],
   "data": () => ({
     "tags": [],
   }),

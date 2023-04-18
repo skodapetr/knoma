@@ -14,9 +14,7 @@
       />
       <v-divider />
       <v-list-item>
-        <v-list-item-content
-          v-if="source.visibleLimit < source.documents.length"
-        >
+        <template v-if="source.visibleLimit < source.documents.length">
           <div>
             Showing {{ source.visibleLimit }}
             out of {{ source.documents.length }}
@@ -28,24 +26,18 @@
           >
             Show more
           </v-btn>
-        </v-list-item-content>
-        <v-list-item-content
-          v-else
-        >
+        </template>
+        <template v-else>
           All of {{ source.documents.length }} documents are visible.
-        </v-list-item-content>
+        </template>
       </v-list-item>
     </v-list>
     <div class="floating-menu">
       <v-btn
-        class="bottom"
         color="green darken-2"
-        fab
-        dark
+        icon="mdi-plus"
         @click="onCreate"
-      >
-        <v-icon>mdi-plus</v-icon>
-      </v-btn>
+      />
     </div>
     <v-overlay :value="loading">
       <v-progress-circular
@@ -64,7 +56,7 @@ import Filter from "./document-filter";
 import {FilteredDocumentSource} from "./filtered-document-source";
 
 export default {
-  "name": "DocumentList",
+  "name": "DocumentListView",
   "components": {
     "app-item": Item,
     "app-filter": Filter,
@@ -117,14 +109,11 @@ export default {
 </script>
 
 <style scoped>
-.bottom {
-  bottom: 2rem;
-}
 
 .floating-menu {
   position: fixed;
   right: 1rem;
-  bottom: -0.9rem;
+  bottom: 1rem;
 }
 
 .item-list {

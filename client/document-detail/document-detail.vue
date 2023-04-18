@@ -1,17 +1,17 @@
 <template>
-  <v-container>
+  <v-container class="pt-0">
     <app-header
       v-model="document"
       @edit-properties="onOpenPropertiesDialog"
-      @edit-type="onOpenNoteTypeDialog"
+      @edit-type="onOpenTypeDialog"
       @save="onSave"
       @close="onClose"
     />
+    <br>
     <app-items
       v-model="document.items"
       :document-iri="document.iri"
       @edit-properties="onOpenPropertiesDialog"
-      @edit-type="onOpenNoteTypeDialog"
     />
     <app-property-dialog
       v-model="propertyDialog.data"
@@ -24,8 +24,8 @@
       v-model="typeDialog.data"
       :visible="typeDialog.open"
       :codelist="['http://www.w3.org/2000/01/rdf-schema#Class']"
-      @save="onSaveNoteTypeDialog"
-      @close="onCloseNoteTypeDialog"
+      @save="onSaveTypeDialog"
+      @close="onCloseTypeDialog"
     />
     <v-layout class="mt-6">
       <v-btn
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import Vue from "vue";
+import {nextTick} from "vue";
 import Header from "./document-detail-header";
 import Items from "./document-detail-notes";
 import PropertyDialog from "../components/properties-dialog";
@@ -57,7 +57,7 @@ import {
 import {NOTE} from "../database/predefined";
 
 export default {
-  "name": "DocumentDetail",
+  "name": "DocumentDetailView",
   "components": {
     "app-header": Header,
     "app-items": Items,
@@ -92,7 +92,7 @@ export default {
     }
     this.loading = false;
   },
-  "destroyed": function () {
+  "unmounted": function () {
     window.document.removeEventListener("keydown", this.onKeyDown);
   },
   "methods": {
@@ -105,7 +105,7 @@ export default {
           ...this.document.items,
           createNewNote(this.document.iri, this.document.items),
         ];
-        Vue.nextTick(() => {
+        nextTick(() => {
           getTextAreas().pop().focus();
         });
         event.preventDefault();
@@ -133,18 +133,19 @@ export default {
       this.propertyDialog.owner.properties = this.propertyDialog.data;
       this.propertyDialog.open = false;
     },
-    "onOpenNoteTypeDialog": function (owner) {
+    "onOpenTypeDialog": function (owner) {
       this.typeDialog = {
         "open": true,
         "owner": owner,
-        "data": owner.types,
+        // Clone data to not modify them in place.
+        "data": [...owner.types],
       };
     },
-    "onSaveNoteTypeDialog": function () {
+    "onSaveTypeDialog": function () {
       this.typeDialog.owner.types = this.typeDialog.data;
       this.typeDialog.open = false;
     },
-    "onCloseNoteTypeDialog": function () {
+    "onCloseTypeDialog": function () {
       this.typeDialog.open = false;
     },
     "onSave": async function () {

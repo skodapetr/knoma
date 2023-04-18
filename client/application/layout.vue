@@ -1,25 +1,19 @@
 <template>
   <v-app>
-    <v-app-bar
-      color="#0000ff"
-      dark
-      app
-    >
-      <v-toolbar-title>
+    <v-app-bar>
+      <v-app-bar-title>
         Knowledge Manager
-      </v-toolbar-title>
+      </v-app-bar-title>
       <v-spacer />
       <v-btn
         :to="{'name':'documents'}"
         class="mr-6"
-        text
       >
         Documents
       </v-btn>
       <v-btn
         :to="{'name':'about'}"
         class="mr-6"
-        text
       >
         About
       </v-btn>
@@ -27,7 +21,6 @@
         href="https://github.com/skodapetr/knoma/issues"
         rel="noopener noreferrer"
         target="_blank"
-        text
       >
         GitHub
       </v-btn>
@@ -41,6 +34,6 @@
 
 <script>
 export default {
-  "name": "Application",
+  "name": "ApplicationLayout",
 };
 </script>

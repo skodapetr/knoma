@@ -106,8 +106,8 @@ function addDemoContent(database: LocalStorageDatabase) {
     "types": [],
     "properties": {
       "https://skodapetr.github.io/knoma/vocabulary#author": [
-        "Petr Škoda"
-      ]
+        "Petr Škoda",
+      ],
     },
     "items": [
       {

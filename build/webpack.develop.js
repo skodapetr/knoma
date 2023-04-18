@@ -1,4 +1,5 @@
 const {merge} = require("webpack-merge");
+const ESLintPlugin = require("eslint-webpack-plugin");
 const webpack = require("webpack");
 const common = require("./webpack.common");
 
@@ -20,16 +21,12 @@ module.exports = merge({
           "css-loader",
         ],
       },
-      {
-        // Apply linter during run development.
-        "enforce": "pre",
-        "test": /\.(js|vue)$/,
-        "loader": "eslint-loader",
-        "exclude": /node_modules/,
-      },
     ],
   },
   "plugins": [
     new webpack.HotModuleReplacementPlugin(),
+    new ESLintPlugin({
+      "extensions": ["js", "ts", "vue"],
+    }),
   ],
 }, common);
