@@ -14,7 +14,7 @@
       v-for="(content, index) in modelValue"
       :key="index"
     >
-      <div style="display: flex">
+      <div class="flex">
         <v-btn
           v-if="definition.multiple"
           icon="mdi-plus"
