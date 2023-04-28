@@ -76,8 +76,7 @@
 </template>
 
 <script>
-import {nextTick} from "vue";
-import {onKeyAltDown} from "./note-edit-service";
+import {onToggleQuote} from "./note-edit-service";
 import {QUOTE} from "../database/predefined";
 
 export default {
@@ -133,20 +132,9 @@ export default {
       this.$emit("add");
     },
     "onKeyDown": function (event) {
-      if (event.altKey) {
-        let result = onKeyAltDown(this.value.text, event);
-        if (result === null) {
-          return;
-        }
-        this.$emit("input", {
-          ...this.value,
-          "text": result.value,
-        });
-        nextTick(() => {
-          event.target.selectionStart = result.positionStart;
-          event.target.selectionEnd = result.positionEnd;
-        });
-        // event.preventDefault();
+      if (event.altKey && event.key === "q") {
+        this.onToggleQuote();
+        event.preventDefault();
       }
     },
     "onPaste": function (event) {
@@ -175,21 +163,7 @@ export default {
       this.showImage = !this.showImage;
     },
     "onToggleQuote": function () {
-      const prevTypes = this.value.types ?? [];
-      let nextTypes;
-      const index = prevTypes.indexOf(QUOTE);
-      if (index === -1) {
-        nextTypes = [...prevTypes, QUOTE];
-      } else {
-        nextTypes = [
-          ...prevTypes.slice(0, index),
-          ...prevTypes.slice(index + 1),
-        ];
-      }
-      this.$emit("input", {
-        ...this.value,
-        "types": nextTypes,
-      });
+      this.$emit("input", onToggleQuote(this.value));
     },
   },
 };

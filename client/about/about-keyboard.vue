@@ -10,6 +10,8 @@
       <dd>In note text area, focus previous note.</dd>
       <dt>alt + down</dt>
       <dd>In note text area, focus next note.</dd>
+      <dt>alt + q</dt>
+      <dd>In note text area, toggle quote switch.</dd>
     </dl>
   </section>
 </template>

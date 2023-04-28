@@ -1,18 +1,20 @@
-export type TextWithCursor = {
-  value: string;
-  positionStart: number;
-  positionEnd: number;
-}
+import {Note} from "../database";
+import {QUOTE} from "../database/predefined";
 
-export function onKeyAltDown(
-  text: string, event: KeyboardEvent): TextWithCursor | null {
-  const target = event.target as HTMLInputElement;
-  const start = target.selectionStart;
-  const end = target.selectionEnd;
-  if (start === null || end === null) {
-    return null;
+export function onToggleQuote(note:Note): Note {
+  const prevTypes = note.types ?? [];
+  let nextTypes;
+  const index = prevTypes.indexOf(QUOTE);
+  if (index === -1) {
+    nextTypes = [...prevTypes, QUOTE];
+  } else {
+    nextTypes = [
+      ...prevTypes.slice(0, index),
+      ...prevTypes.slice(index + 1),
+    ];
   }
-  return null;
+  return {
+    ...note,
+    "types": nextTypes,
+  };
 }
-
-
