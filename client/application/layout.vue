@@ -28,7 +28,7 @@
     <v-main>
       <router-view />
     </v-main>
-    <notifications />
+    <notifications position="top center" class="notification"/>
   </v-app>
 </template>
 
@@ -37,3 +37,9 @@ export default {
   "name": "ApplicationLayout",
 };
 </script>
+
+<style scoped>
+.notification {
+  margin: 10px
+}
+</style>

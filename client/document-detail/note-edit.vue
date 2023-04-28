@@ -18,6 +18,7 @@
       />
       <v-switch
         :model-value="isQuote"
+        color="indigo"
         label="Quote"
         density="compact"
         @update:model-value="onToggleQuote"
