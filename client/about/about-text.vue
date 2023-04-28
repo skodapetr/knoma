@@ -26,16 +26,16 @@
       <li>
         Code of given <em>{type}</em>:
         <pre><code>```{type}
-  ...
-  ```</code></pre>
+...
+```</code></pre>
         You can use <code>```Quote...</code> to mark a quote from the source
         document. Alternatively you can mark whole note as a quote.
       </li>
       <li>
         Item list:
         <pre><code>* Item
-   * Item
-   * Item</code></pre>
+* Item
+* Item</code></pre>
       </li>
     </ul>
   </section>
