@@ -112,6 +112,7 @@ function addDemoContent(database: LocalStorageDatabase) {
     "items": [
       {
         "identifier": "001",
+        "types": [],
         "properties": {},
         "created": now,
         "text": "There might be a tutorial one day ... ",
@@ -119,6 +120,7 @@ function addDemoContent(database: LocalStorageDatabase) {
       },
       {
         "identifier": "002",
+        "types": [],
         "properties": {},
         "created": now,
         "text": "This instance is using your local storage to store data.",

@@ -16,6 +16,12 @@
         class="mr-4"
         @click="onEditProperties(value)"
       />
+      <v-switch
+        :model-value="isQuote"
+        label="Quote"
+        density="compact"
+        @update:model-value="onToggleQuote"
+      />
       <v-spacer />
       <v-btn
         icon="mdi-minus"
@@ -72,6 +78,7 @@
 <script>
 import {nextTick} from "vue";
 import {onKeyAltDown} from "./note-edit-service";
+import {QUOTE} from "../database/predefined";
 
 export default {
   "name": "NoteEdit",
@@ -97,6 +104,11 @@ export default {
   "data": () => ({
     "showImage": false,
   }),
+  "computed": {
+    "isQuote": function() {
+      return (this.value.types ?? []).includes(QUOTE);
+    },
+  },
   "methods": {
     "onCopyIri": function () {
       const iri = this.documentIri + "/notes/" + this.value.identifier;
@@ -134,7 +146,7 @@ export default {
           event.target.selectionStart = result.positionStart;
           event.target.selectionEnd = result.positionEnd;
         });
-        event.preventDefault();
+        // event.preventDefault();
       }
     },
     "onPaste": function (event) {
@@ -161,6 +173,23 @@ export default {
     },
     "onToggleImage": function () {
       this.showImage = !this.showImage;
+    },
+    "onToggleQuote": function () {
+      const prevTypes = this.value.types ?? [];
+      let nextTypes;
+      const index = prevTypes.indexOf(QUOTE);
+      if (index === -1) {
+        nextTypes = [...prevTypes, QUOTE];
+      } else {
+        nextTypes = [
+          ...prevTypes.slice(0, index),
+          ...prevTypes.slice(index + 1),
+        ];
+      }
+      this.$emit("input", {
+        ...this.value,
+        "types": nextTypes,
+      });
     },
   },
 };

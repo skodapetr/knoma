@@ -137,3 +137,5 @@ export function getCoreCodelistItem(type: string): string[] {
 export function getCorePredicate(): Predicate[] {
   return PREDICATES;
 }
+
+export const QUOTE = "https://skodapetr.github.io/knoma/vocabulary#Quote";

@@ -40,6 +40,8 @@ export interface Note {
    */
   identifier: string;
 
+  types: string[];
+
   properties: { [iri: string]: string[] },
 
   created: string;

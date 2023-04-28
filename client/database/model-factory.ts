@@ -25,6 +25,7 @@ function createIdentifier() {
 export function createNote(identifier: string, text: string): Note {
   return {
     "identifier": identifier,
+    "types": [],
     "properties": {},
     "created": new Date().toISOString().substr(0, 10),
     "text": text,
