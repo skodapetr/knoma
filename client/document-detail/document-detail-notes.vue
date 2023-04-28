@@ -1,5 +1,10 @@
 <template>
-  <v-list>
+  <!--
+    We can not use v-list here.
+    The v-list capture arrows, Home, End and use them to navigate the list.
+    We do not need this as we need to capture the keys on your own.
+   -->
+  <div class="v-list">
     <v-list-item
       v-for="(item, index) in modelValue"
       :key="item.iri"
@@ -21,7 +26,7 @@
         @click="onAppend()"
       />
     </v-list-item>
-  </v-list>
+  </div>
 </template>
 
 <script>

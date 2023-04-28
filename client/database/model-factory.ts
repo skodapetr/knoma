@@ -22,10 +22,12 @@ function createIdentifier() {
   });
 }
 
-export function createNote(identifier: string, text: string): Note {
+export function createNote(
+  identifier: string, text: string, types: string[] = [],
+): Note {
   return {
     "identifier": identifier,
-    "types": [],
+    "types": types,
     "properties": {},
     "created": new Date().toISOString().substr(0, 10),
     "text": text,

@@ -29,7 +29,7 @@
   ...
   ```</code></pre>
         You can use <code>```Quote...</code> to mark a quote from the source
-        document.
+        document. Alternatively you can mark whole note as a quote.
       </li>
       <li>
         Item list:
