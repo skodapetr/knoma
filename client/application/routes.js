@@ -6,7 +6,7 @@ const routes = [
   {
     "path": "/",
     "name": "home",
-    "component": About,
+    "component": DocumentList,
   }, {
     "path": "/document-edit",
     "name": "document-edit",
