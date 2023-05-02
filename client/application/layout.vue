@@ -28,7 +28,10 @@
     <v-main>
       <router-view />
     </v-main>
-    <notifications position="top center" class="notification"/>
+    <notifications
+      position="top center"
+      class="notification"
+    />
   </v-app>
 </template>
 
