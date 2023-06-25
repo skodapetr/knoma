@@ -5,9 +5,9 @@ const webpackHotMiddleware = require("webpack-hot-middleware");
 const config = require("../build/webpack.develop.js");
 const server = require("./server.common");
 
-(function initialize() {
+(async function startDevelopServer() {
   const app = express();
-  server.initialize(app);
+  await server.initialize(app);
   initializeWebpack(app);
   server.start(app);
 }());

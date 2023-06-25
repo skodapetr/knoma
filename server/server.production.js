@@ -2,9 +2,9 @@ const path = require("path");
 const express = require("express");
 const server = require("./server.common");
 
-(function initialize() {
+(async function startProductionServer() {
   const app = express();
-  server.initialize(app);
+  await server.initialize(app);
   initializeStatic(app);
   server.start(app);
 }());

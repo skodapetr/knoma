@@ -1,11 +1,13 @@
 const express = require("express");
 const logger = require("./logging");
 const config = require("./configuration");
-const database = require("./database-file");
+const database = require("./database");
+const {createRoutes} = require("./http");
 
-function initialize(app) {
+async function initialize(app) {
+  await database.initialize();
   const router = express.Router();
-  database(router);
+  createRoutes(router, database);
   app.use("/api/v1", router);
 }
 
@@ -15,7 +17,7 @@ function start(app) {
     if (error) {
       logger.error("Can't start server.", {"error": error});
     }
-    logger.info("Server has been started. ", {"port": port});
+    logger.info("Server has been started.", {"port": port});
   });
 }
 
