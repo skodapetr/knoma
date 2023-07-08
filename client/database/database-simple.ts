@@ -6,9 +6,14 @@ import {
   PredicateEditType,
 } from "./model";
 import {
+  createEmptyTemplate,
+  createQuickNoteTemplate,
+} from "./template";
+import {
   getCoreCodelistItem,
   getCoreLabel,
   getCorePredicate,
+  DOCUMENT_TEMPLATE,
 } from "./predefined";
 
 const RDFS_PROPERTY =
@@ -44,6 +49,18 @@ export abstract class SimpleDatabase implements Database {
    * Update documents from server if needed.
    */
   protected abstract refreshDocuments(): Promise<void>;
+
+  async getTemplateDocuments(): Promise<DocumentWithData[]> {
+    await this.refreshDocuments();
+    const userDocuments = await Promise.all(this.documents
+      .filter(isTemplateDocument)
+      .map(item => this.getDocument(item.iri)));
+    return [
+      createEmptyTemplate(),
+      createQuickNoteTemplate(),
+      ...userDocuments as any,
+    ];
+  }
 
   abstract getDocument(iri: string): Promise<DocumentWithData | undefined>;
 
@@ -134,4 +151,8 @@ function documentToPredicate(document: Document): Predicate {
     "listColour": listColour?.[0],
     "listPriority": parseInt(listPriority?.[0] ?? "0"),
   };
+}
+
+function isTemplateDocument(document: Document) {
+  return document.types.includes(DOCUMENT_TEMPLATE);
 }

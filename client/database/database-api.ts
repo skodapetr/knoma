@@ -13,6 +13,11 @@ export interface Database {
   getDocuments(): Promise<Document[]>;
 
   /**
+   * Return document that can be used as templates.
+   */
+  getTemplateDocuments(): Promise<DocumentWithData[]>;
+
+  /**
    * Return document with given IRI if it exists.
    */
   getDocument(iri: string): Promise<DocumentWithData | undefined>;

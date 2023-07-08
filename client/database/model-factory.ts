@@ -1,16 +1,27 @@
 import {DocumentWithData, Note} from "./model";
 import {getConfiguration} from "../application/configuration";
 
-export function createDocument(): DocumentWithData {
-  const configuration = getConfiguration();
-  return {
-    "iri": configuration.domain + createIdentifier(),
+export function createEmptyDocument(): DocumentWithData {
+  return createDocument({
+    "iri": "",
+    "identifier": "",
     "types": [],
     "title": "",
     "description": "",
-    "created": new Date().toISOString().substr(0, 10),
+    "created": "",
     "properties": {},
     "items": [],
+  });
+}
+
+export function createDocument(template: DocumentWithData): DocumentWithData {
+  const configuration = getConfiguration();
+  const identifier = createIdentifier();
+  return {
+    ...template,
+    "iri": configuration.domain + identifier,
+    "identifier": identifier,
+    "created": new Date().toISOString().substring(0, 10),
   };
 }
 
@@ -29,7 +40,7 @@ export function createNote(
     "identifier": identifier,
     "types": types,
     "properties": {},
-    "created": new Date().toISOString().substr(0, 10),
+    "created": new Date().toISOString().substring(0, 10),
     "text": text,
     "image": undefined,
   };

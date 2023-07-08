@@ -1,12 +1,42 @@
 import {Predicate, PredicateEditType} from "./model";
 
+/**
+ * Represent a quote of the source material.
+ */
+export const QUOTE =
+  "https://skodapetr.github.io/knoma/vocabulary#Quote";
+
+/**
+ * Represent a template new documents can be created from.
+ */
+export const DOCUMENT_TEMPLATE =
+  "https://skodapetr.github.io/knoma/vocabulary#Template";
+
+/**
+ * Represent a quick note.
+ */
+export const DOCUMENT_NOTE =
+  "https://skodapetr.github.io/knoma/vocabulary#QuickNote";
+
+/**
+ * Represent a note inside a document.
+ * This is not stored, we use it only to select properties for notes.
+ */
 export const NOTE = "https://skodapetr.github.io/knoma/vocabulary#Note";
+
+export const TEMPLATE_EMPTY =
+  "https://skodapetr.github.io/knoma/resources/empty-template";
+
+export const NOTE_TEMPLATE =
+  "https://skodapetr.github.io/knoma/resources/quick-note-template";
 
 const LABELS: { [iri: string]: string } = {
   "http://www.w3.org/2004/02/skos/core#ConceptScheme": "Concept Scheme",
   "http://www.w3.org/2004/02/skos/core#Concept": "Concept",
   "http://www.w3.org/2000/01/rdf-schema#Property": "Property",
   "http://www.w3.org/2000/01/rdf-schema#Class": "Class",
+  [DOCUMENT_TEMPLATE]: "Template",
+  [DOCUMENT_NOTE]: "Quick note",
 };
 
 const CODE_LISTS: { [type: string]: string[] } = {
@@ -15,6 +45,8 @@ const CODE_LISTS: { [type: string]: string[] } = {
     "http://www.w3.org/2004/02/skos/core#Concept",
     "http://www.w3.org/2000/01/rdf-schema#Property",
     "http://www.w3.org/2000/01/rdf-schema#Class",
+    DOCUMENT_TEMPLATE,
+    DOCUMENT_NOTE,
   ],
 };
 
@@ -137,5 +169,3 @@ export function getCoreCodelistItem(type: string): string[] {
 export function getCorePredicate(): Predicate[] {
   return PREDICATES;
 }
-
-export const QUOTE = "https://skodapetr.github.io/knoma/vocabulary#Quote";

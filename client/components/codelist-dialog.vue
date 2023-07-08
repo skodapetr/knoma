@@ -84,7 +84,6 @@ export default {
   },
   "mounted": async function() {
     await this.reloadCodelistFromDatabase();
-    console.log("mounted", this.items);
   },
   "methods": {
     "reloadCodelistFromDatabase": async function() {

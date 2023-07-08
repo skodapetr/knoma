@@ -47,7 +47,7 @@ import Header from "./document-detail-header";
 import Items from "./document-detail-notes";
 import PropertyDialog from "../components/properties-dialog";
 import CodelistDialog from "../components/codelist-dialog";
-import {createDocument, getDatabase} from "../database";
+import {createEmptyDocument, getDatabase} from "../database";
 import {
   createNewNote,
   focusNextNote,
@@ -65,7 +65,7 @@ export default {
     "app-codelist-dialog": CodelistDialog,
   },
   "data": () => ({
-    "document": createDocument(),
+    "document": createEmptyDocument(),
     "loading": false,
     "propertyDialog": {
       "open": false,

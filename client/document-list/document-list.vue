@@ -36,7 +36,7 @@
       <v-btn
         color="green darken-2"
         icon="mdi-plus"
-        @click="onCreate"
+        @click="onShowCreateDialog"
       />
     </div>
     <v-overlay :value="loading">
@@ -46,6 +46,11 @@
         indeterminate
       />
     </v-overlay>
+    <app-create-document-dialog
+      :visible="showCreateDialog"
+      @create="onCreateDocument"
+      @close="onCloseCreateDialog"
+    />
   </v-container>
 </template>
 
@@ -54,16 +59,19 @@ import {getDatabase} from "../database";
 import Item from "./document-list-item";
 import Filter from "./document-filter";
 import {FilteredDocumentSource} from "./filtered-document-source";
+import CreateDocumentDialog from "./create-document-dialog";
 
 export default {
   "name": "DocumentListView",
   "components": {
     "app-item": Item,
     "app-filter": Filter,
+    "app-create-document-dialog": CreateDocumentDialog,
   },
   "data": () => ({
     "source": new FilteredDocumentSource(),
     "loading": false,
+    "showCreateDialog": false,
   }),
   "mounted": async function mounted() {
     await this.reload();
@@ -91,10 +99,19 @@ export default {
       //
       await this.reload();
     },
-    "onCreate": function () {
+    "onShowCreateDialog": function () {
+      this.showCreateDialog = true;
+    },
+    "onCreateDocument": function(document) {
       this.$router.push({
         "name": "document-edit",
+        "query": {
+          "document": document.iri,
+        },
       });
+    },
+    "onCloseCreateDialog": function() {
+      this.showCreateDialog = false;
     },
     "reload": async function() {
       this.loading = true;

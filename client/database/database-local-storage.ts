@@ -67,6 +67,7 @@ class LocalStorageDatabase extends SimpleDatabase implements Database {
     // Update documents.
     const newDocument: Document = {
       "iri": document.iri,
+      "identifier": document.identifier,
       "types": document.types,
       "title": document.title,
       "description": document.description,
@@ -99,7 +100,8 @@ function isFirstLoad(): boolean {
 function addDemoContent(database: LocalStorageDatabase) {
   const now = new Date().toISOString().substr(0, 10);
   database.storeDocument({
-    "iri": "http://example.com/note/001",
+    "iri": "http://example.com/document/001",
+    "identifier": "001",
     "created": now,
     "title": "Click me!",
     "description": "Welcome to Knowledge Manager.",
