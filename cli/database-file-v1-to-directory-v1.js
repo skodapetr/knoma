@@ -1,3 +1,8 @@
+//
+// Convert file v1 database to directory v1 database.
+// Directory database is slower to load documents but consumes
+// less memory
+//
 const logger = require("../server/logging");
 
 const fileDatabase = require("../server/database/file-v1");
