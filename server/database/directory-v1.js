@@ -176,10 +176,10 @@ async function saveDatabaseFile() {
   await utilities.writeJsonToFile(databaseContent, getDataFilePath());
 }
 
-async function deleteDocument(identifier) {
+async function deleteDocument(iri) {
   const documents = databaseContent.documents;
   for (let index = 0; index < documents.length; ++index) {
-    if (documents[index].iri === identifier) {
+    if (documents[index].iri === iri) {
       documents.splice(index, 1);
       break;
     }
@@ -187,8 +187,9 @@ async function deleteDocument(identifier) {
   // Update database file.
   await saveDatabaseFile();
   // Remove objects file.
-  const objectsPath = getDocumentObjectsPath(document.iri);
-  if (await utilities.fileNotExists(objectsPath)) {
+  const identifier = iri.substring(iri.lastIndexOf("/") + 1);
+  const objectsPath = getDocumentObjectsPath(identifier);
+  if (await utilities.fileExists(objectsPath)) {
     await utilities.deleteFile(objectsPath);
   }
 }
