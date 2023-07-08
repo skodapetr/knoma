@@ -1,13 +1,13 @@
 const path = require("path");
-const fileSystem = require("fs");
+const utilities = require("./utilitis");
 
-const logger = require("./logging");
-const configuration = require("./configuration");
+const logger = require("../logging");
+const configuration = require("../configuration");
 
-let databaseFile = [];
+let databaseContent = {documents: []};
 
 /**
- * All methods are async.
+ * Database store all content in a single file.
  */
 module.exports = {
   /**
@@ -33,26 +33,29 @@ module.exports = {
 };
 
 async function initialize() {
-  logger.info("Reading database file ... ");
-  const content = fileSystem.readFileSync(getDataFilePath());
-  databaseFile = JSON.parse(content);
+  const filePath = getDataFilePath();
+  if (await utilities.fileNotExists(filePath)) {
+    return;
+  }
+  logger.info("Reading database file ...");
+  databaseContent = await utilities.readJsonFromFile(filePath);
   logger.info("Reading database file ... done");
 }
 
 function getDataFilePath() {
-  return path.join(configuration.databasePath, "database.json");
+  return path.join(configuration.databasePath, "database-file-v1.json");
 }
 
 async function listDocuments() {
-  const result = databaseFile.documents
+  const result = databaseContent.documents
     .map(document => ({...document, "items": undefined}));
-  result.reverse();
+  result.sort((left, right) => right.created.localeCompare(left.created));
   return result;
 }
 
-async function loadDocument(iri) {
-  for (const document of databaseFile.documents) {
-    if (document.iri === iri) {
+async function loadDocument(identifier) {
+  for (const document of databaseContent.documents) {
+    if (document.iri === identifier) {
       return document;
     }
   }
@@ -65,7 +68,7 @@ async function storeDocument(document) {
 }
 
 function updateDocument(document) {
-  const documents = databaseFile.documents;
+  const documents = databaseContent.documents;
   for (let index = 0; index < documents.length; ++index) {
     if (documents[index].iri === document.iri) {
       documents[index] = document;
@@ -76,26 +79,17 @@ function updateDocument(document) {
 }
 
 async function saveDatabaseFile() {
-  const contentAsStr = JSON.stringify(databaseFile, null, 2);
-  return new Promise((accept, reject) => {
-    fileSystem.writeFile(getDataFilePath(), contentAsStr, "utf8", (error) => {
-      if (error === null) {
-        accept();
-      } else {
-        reject(error);
-      }
-    });
-  });
+  await utilities.writeJsonToFile(databaseContent, getDataFilePath());
 }
 
-async function deleteDocument(iri) {
-  const documents = databaseFile.documents;
+async function deleteDocument(identifier) {
+  const documents = databaseContent.documents;
   for (let index = 0; index < documents.length; ++index) {
-    if (documents[index].iri === iri) {
+    if (documents[index].iri === identifier) {
       documents.splice(index, 1);
       break;
     }
   }
-  //
+  // Update database file.
   await saveDatabaseFile();
 }

@@ -4,5 +4,5 @@ module.exports = {
   // Path to database directory.
   "databasePath": "./data/",
   // Instance identifier, used to create new resources.
-  "instanceIdentifier": "0000-0000"
+  "instanceIdentifier": "0000-0000",
 };

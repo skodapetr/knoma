@@ -8,6 +8,8 @@ export interface Document {
 
   iri: string;
 
+  identifier: string;
+
   types: string[];
 
   title: string;

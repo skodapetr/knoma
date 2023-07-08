@@ -2,8 +2,8 @@ const express = require("express");
 const webpack = require("webpack");
 const webpackDevMiddleware = require("webpack-dev-middleware");
 const webpackHotMiddleware = require("webpack-hot-middleware");
-const config = require("../build/webpack.develop.js");
-const server = require("./server.common");
+const config = require("../../build/webpack.develop.js");
+const server = require("../server-common");
 
 (async function startDevelopServer() {
   const app = express();
@@ -15,7 +15,7 @@ const server = require("./server.common");
 function initializeWebpack(app) {
   const webpackCompiler = webpack(config);
   app.use(webpackDevMiddleware(webpackCompiler, {
-    "publicPath": config.output.publicPath.substr(1),
+    "publicPath": config.output.publicPath.substring(1),
     "stats": "minimal",
   }));
   app.use(webpackHotMiddleware(webpackCompiler));

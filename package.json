@@ -5,10 +5,10 @@
   "description": "",
   "license": "MIT",
   "scripts": {
-    "dev": "node ./server/server.develop.js",
+    "dev": "node ./server/main/develop.js",
     "build": "webpack --config build/webpack.production.js",
     "build-demo": "webpack --config build/webpack.demo.js",
-    "start": "node ./server/server.production.js",
+    "start": "node ./server/main/production.js",
     "lint": "eslint --ext .js,.vue,.ts --ignore-path .gitignore . --fix"
   },
   "devDependencies": {

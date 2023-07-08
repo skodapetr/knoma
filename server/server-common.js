@@ -1,7 +1,7 @@
 const express = require("express");
 const logger = require("./logging");
 const config = require("./configuration");
-const database = require("./database");
+const database = require("./database/directory-v1");
 const {createRoutes} = require("./http");
 
 async function initialize(app) {

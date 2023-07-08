@@ -1,6 +1,6 @@
 const path = require("path");
 const express = require("express");
-const server = require("./server.common");
+const server = require("../server-common");
 
 (async function startProductionServer() {
   const app = express();
@@ -10,6 +10,6 @@ const server = require("./server.common");
 }());
 
 function initializeStatic(app) {
-  const assetsDir = path.join(__dirname, "..", "dist");
+  const assetsDir = path.join(__dirname, "..", "..", "dist");
   app.use("/", express.static(assetsDir));
 }
