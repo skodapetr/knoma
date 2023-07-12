@@ -84,7 +84,7 @@ async function loadDocumentObjects(document) {
   }
   const objects = await utilities.readJsonFromFile(objectsPath);
   for (const item of document.items) {
-    const itemObjects = objects.data[item.iri];
+    const itemObjects = objects.data[item.identifier];
     if (itemObjects === undefined) {
       items.push(item);
     } else {
@@ -141,7 +141,7 @@ function extractObjectsFromDocument(document) {
     if (item.image === undefined) {
       items.push(item);
     } else {
-      objects[item.iri] = {
+      objects[item.identifier] = {
         "image": item.image,
       };
       items.push({
