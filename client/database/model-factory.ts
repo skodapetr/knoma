@@ -1,5 +1,6 @@
 import {DocumentWithData, Note} from "./model";
 import {getConfiguration} from "../application/configuration";
+import {DOCUMENT_TEMPLATE} from "./predefined";
 
 export function createEmptyDocument(): DocumentWithData {
   return createDocument({
@@ -20,6 +21,8 @@ export function createDocument(template: DocumentWithData): DocumentWithData {
   return {
     ...template,
     "iri": configuration.domain + identifier,
+    // We need to remote the template type.
+    "types": template.types.filter(item => item !== DOCUMENT_TEMPLATE),
     "identifier": identifier,
     "created": new Date().toISOString().substring(0, 10),
   };
