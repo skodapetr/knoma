@@ -49,7 +49,14 @@ function getDataFilePath() {
 async function listDocuments() {
   const result = databaseContent.documents
     .map(document => ({...document, "items": undefined}));
-  result.sort((left, right) => right.created.localeCompare(left.created));
+  result.sort((left, right) => {
+    const created = right.created.localeCompare(left.created);
+    if (created === 0) {
+      return right.identifier.localeCompare(left.identifier);
+    } else {
+      return created;
+    }
+  });
   return result;
 }
 
